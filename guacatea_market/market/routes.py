@@ -7,7 +7,6 @@ from flask import render_template
 def home_page():
     return render_template('home.html')
 
-
-@app.route("/login")
-def login_page():
-    return render_template("login.html")
+@app.route('/login')
+def home_login():
+    return render_template('login.html')
