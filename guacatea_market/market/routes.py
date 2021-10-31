@@ -19,7 +19,7 @@ def register_page():
 
 
 @app.route('/login', methods=["GET", "POST"])
-def home_login():
+def login_page():
     return render_template('login.html')
 
 
