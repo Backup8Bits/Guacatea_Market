@@ -8,11 +8,6 @@ def home_page():
     return render_template('home.html')
 
 
-@app.route('/login')
-def home_login():
-    return render_template('login.html')
-
-
 @app.route('/market')
 def market_page():
     return render_template("market.html")
@@ -24,7 +19,7 @@ def register_page():
 
 
 @app.route('/login', methods=["GET", "POST"])
-def login_page():
+def home_login():
     return render_template('login.html')
 
 
