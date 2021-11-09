@@ -4,6 +4,12 @@ Flask==2.0.2
 Flask-RESTful==0.3.9
 Flask-SQLAlchemy==2.5.1
 flask-swagger==0.2.14
+flask-bootstrap==3.3.7.1
+flask-testing==0.8.1
+flask-login==0.4.1
+flask-FontAwesome==0.1.5
+marshmallow-sqlalchemy==0.24.1
+email-validator==1.1.2
 greenlet==1.1.2
 itsdangerous==2.0.1
 Jinja2==3.0.2
