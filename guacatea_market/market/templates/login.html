@@ -2,37 +2,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Login Page
+  Login Page
 {% endblock %}
 
-{% block styles %}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/login_page.css')}}"/>
-{% endblock %}
 
 {% block content %}
-    <div class="Login">
-        <form action="POST">
-            <p class="title-login">
-                Iniciar Sesion
-            </p>
 
-
-            <p>Email</p>
-            <input type="email" name="email">
-
-            <p>Password</p>
-            <input type="password" name="pass">
-
-            <div class="olvi">
-                <a href="">¿Olvidaste la contraseña?</a>
-            </div>
-            
-            <div class="under">
-                <a href="">Crear cuenta</a>
-                
-                <input type="submit" value="Acceder">
-            </div>
-
-        </form>
-    </div>
+   
 {% endblock %}
