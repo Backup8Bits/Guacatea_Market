@@ -19,7 +19,8 @@ def register_page():
     form = RegisterForm()
     if form.validate_on_submit():
         flash('Usuario registrado correctamente, ahora puedes iniciar sesión.')
-        return redirect(url_for('login'))
+        return redirect(url_for('login_page'))
+
     return render_template('register.html', form=form)
 
 
