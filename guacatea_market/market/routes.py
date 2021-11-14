@@ -25,9 +25,9 @@ def register_page():
 
 @app.route('/login', methods=["GET", "POST"])
 def login_page():
+    from = LoginForm()
     if form.validate_on_submit():
-        if form.validate_on_submit():
-            return redirect(url_for('login'))
+        return redirect(url_for('login'))
     return render_template('login.html')
 
 
