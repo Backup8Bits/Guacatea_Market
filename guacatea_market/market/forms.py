@@ -7,7 +7,7 @@ class RegisterForm(FlaskForm):
     username = StringField(label='Username', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired(), Email()])
     password_1 = PasswordField('password1', validators=[DataRequired()])
-    password_2 = PasswordField('password2', validators=[DataRequired(), EqualTo('contraseña', 'Las contraseñas no coinciden')])
+    password_2 = PasswordField('password2', validators=[DataRequired(), EqualTo('password1')])
     submit = SubmitField('Crear Cuenta')
 
 class LoginForm(FlaskForm):
