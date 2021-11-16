@@ -1,4 +1,5 @@
-from Guacatea_Market.guacatea_market.market.models import User
+from market.models import User
+
 from market import app
 from flask import render_template, redirect, url_for, flash
 from market.forms import RegisterForm, LoginForm
