@@ -28,7 +28,7 @@ def register_page():
 def login_page():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('login'))
+        return redirect(url_for('login_page'))
     return render_template('login.html')
 
 
