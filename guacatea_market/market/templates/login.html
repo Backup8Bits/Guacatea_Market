@@ -1,38 +1,25 @@
-
-{% extends 'base.html' %}
-
-{% block title %}
-    Login Page
-{% endblock %}
-
-{% block styles %}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/login_page.css')}}"/>
-{% endblock %}
-
 {% block content %}
-    <div class="Login">
-        <form action="POST">
-            <p class="title-login">
-                Iniciar Sesion
-            </p>
+<body class="text-center" >
+    <div class="container">
+        <form method="POST" class="form-Login">
+            {{ form.hidden_tag() }}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Login
+            </h1>
+            <br>
 
+                {{ form.username.label() }}
+                {{ form.username(class="form-control", placeholder="username") }}
 
-            <p>Email</p>
-            <input type="email" name="email">
+                {{ form.email.label() }}
+                {{ form.email(class="form-control", placeholder="email") }}
 
-            <p>Password</p>
-            <input type="password" name="pass">
+                {{ form.password_1.label() }}
+                {{ form.password_1(class="form-control", placeholder="password_1") }}
 
-            <div class="olvi">
-                <a href="">¿Olvidaste la contraseña?</a>
-            </div>
-            
-            <div class="under">
-                <a href="">Crear cuenta</a>
-                
-                <input type="submit" value="Acceder">
-            </div>
+                {{ form.submit(class="btn-lg btn-primary m-5")}}
 
         </form>
     </div>
+</body>
 {% endblock %}

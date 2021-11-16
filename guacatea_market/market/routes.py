@@ -1,6 +1,7 @@
 from market import app
-from flask import render_template
-
+from flask import render_template, redirect, url_for, flash
+from market.forms import RegisterForm, LoginForm
+from market.models import User
 
 @app.route('/')
 @app.route('/home')
@@ -15,11 +16,19 @@ def market_page():
 
 @app.route('/register', methods=["GET", "POST"])
 def register_page():
-    return render_template('register.html')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        flash('Usuario registrado correctamente, ahora puedes iniciar sesión.')
+        return redirect(url_for('login_page'))
+
+    return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login_page():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect(url_for('login_page'))
     return render_template('login.html')
 
 

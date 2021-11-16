@@ -1,10 +1,28 @@
-{% extends "base.html" %}
-
-{% block title %}
-Register Page
-{% endblock %}
-
-
 {% block content %}
-<h1>Bienvenidos a Register</h1>
+<body class="text-center" >
+    <div class="container">
+        <form method="POST" class="form-register">
+            {{ form.hidden_tag() }}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Please create your account
+            </h1>
+            <br>
+
+                {{ form.username.label() }}
+                {{ form.username(class="form-control", placeholder="username") }}
+
+                {{ form.email.label() }}
+                {{ form.email(class="form-control", placeholder="email") }}
+
+                {{ form.password_1.label() }}
+                {{ form.password_1(class="form-control", placeholder="password_1") }}
+
+                {{ form.password_2.label() }}
+                {{ form.password_2(class="form-control", placeholder="password_2") }}
+
+                {{ form.submit(class="btn-lg btn-primary m-5")}}
+
+        </form>
+    </div>
+</body>
 {% endblock %}
