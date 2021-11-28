@@ -18,8 +18,11 @@ def market_page():
 def register_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        flash('Usuario registrado correctamente, ahora puedes iniciar sesión.')
-        return redirect(url_for('login_page'))
+        return redirect(url_for('home_page'))
+
+    if form.errors != {}: #If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('register.html', form=form)
 
@@ -28,8 +31,13 @@ def register_page():
 def login_page():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('login_page'))
-    return render_template('login.html')
+        return redirect(url_for('home_page'))
+        
+    if form.errors != {}: #If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+
+    return render_template('login.html', form=form)
 
 
 """

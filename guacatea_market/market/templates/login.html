@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login Page
+{% endblock %}
+
 {% block content %}
 <body class="text-center" >
     <div class="container">
@@ -11,11 +17,8 @@
                 {{ form.username.label() }}
                 {{ form.username(class="form-control", placeholder="username") }}
 
-                {{ form.email.label() }}
-                {{ form.email(class="form-control", placeholder="email") }}
-
-                {{ form.password_1.label() }}
-                {{ form.password_1(class="form-control", placeholder="password_1") }}
+                {{ form.password.label() }}
+                {{ form.password(class="form-control", placeholder="password_1") }}
 
                 {{ form.submit(class="btn-lg btn-primary m-5")}}
 

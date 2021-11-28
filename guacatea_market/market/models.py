@@ -1,5 +1,4 @@
 # Aca estaran los modelos de nuestra base de datos
-# from market import db
 from market import db
 
 class User(db.Model):
@@ -12,7 +11,6 @@ class User(db.Model):
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(30), nullable=False, unique=True)
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1024), nullable=False, unique=True)
