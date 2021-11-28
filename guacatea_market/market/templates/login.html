@@ -1,28 +1,47 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login Page
+login page
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="/static/css/login_page.css">
+
+
 {% endblock %}
 
 {% block content %}
-<body class="text-center" >
-    <div class="container">
-        <form method="POST" class="form-Login">
-            {{ form.hidden_tag() }}
-            <h1 class="h3 mb-3 font-weight-normal">
-                Login
-            </h1>
-            <br>
+<body>
+  <div class="container">
 
-                {{ form.username.label() }}
-                {{ form.username(class="form-control", placeholder="username") }}
+    <div class="card bg-light">
+      <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">Login</h4>
+        <p class="text-center" style="margin-bottom: 0px;">Welcome back! Sign in to your account</p>
+        <img class="img-fluid" src="/static/img/avocado_mini.png" alt="Responsive image">
 
-                {{ form.password.label() }}
-                {{ form.password(class="form-control", placeholder="password_1") }}
+        <form method="post">
 
-                {{ form.submit(class="btn-lg btn-primary m-5")}}
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input name="" class="form-control" placeholder="Username" type="text">
+          </div> <!-- form-group// -->
 
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input class="form-control" placeholder="Password" type="password">
+          </div> <!-- form-group// -->
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+          </div> <!-- form-group// -->
+          
+          <p class="text-center">Have an account? <a href="">Log In</a> </p>
         </form>
-    </div>
+      </article>
 </body>
 {% endblock %}

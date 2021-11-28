@@ -13,9 +13,9 @@ load_dotenv()
 
 # Checa si el run.py ha sido ejecutado directamente y no importado
 if __name__ == '__main__':
-    """ PORT = int(os.getenv("FLASK_RUN_PORT", 5000))
+    PORT = int(os.getenv("FLASK_RUN_PORT", 5000))
     HOST = os.getenv("FLASK_RUN_HOST", "0.0.0.0")
     DEBUG = os.getenv("DEBUG", False)
 
-    app.run(host=HOST, port=PORT, debug=DEBUG) """
-    app.run(debug=True)
+    app.run(host=HOST, port=PORT, debug=DEBUG)
+    
