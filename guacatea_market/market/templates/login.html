@@ -5,7 +5,7 @@ login page
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="/static/login_page.css">
+<link rel="stylesheet" href="/static/css/login_page.css">
 
 
 {% endblock %}
@@ -40,7 +40,7 @@ login page
             <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
           </div> <!-- form-group// -->
           
-          <p class="text-center">Have an account? <a href="">Log In</a> </p>
+          <p class="text-center">Don't have an account? <a href="{{ url_for('register_page') }}">Register</a> </p>
         </form>
       </article>
 </body>
