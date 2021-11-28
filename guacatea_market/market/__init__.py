@@ -7,8 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__,
-            static_url_path='', 
-            static_folder='market/static')
+    static_url_path='/static'
+)
 
 # Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://guacatea:guacatea@localhost:5432/guacatea'
