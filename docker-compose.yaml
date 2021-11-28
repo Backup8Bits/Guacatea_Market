@@ -25,9 +25,14 @@ services:
             POSTGRES_USER: guacatea
             POSTGRES_PASSWORD: guacatea
             POSTGRES_DB: guacatea
+        volumes:
+            - postgres-db-volume:/var/lib/postgresql/data
 
     adminer:
         image: adminer
         restart: always
         ports:
             - 8080:8080
+
+volumes:
+    postgres-db-volume:
