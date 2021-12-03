@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-login page
+Login Page
 {% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="/static/css/login_page.css">
-
-
 {% endblock %}
 
 {% block content %}
@@ -15,33 +13,36 @@ login page
   <div class="container">
 
     <div class="card bg-light">
-      <article class="card-body mx-auto" style="max-width: 400px;">
-        <h4 class="card-title mt-3 text-center">Login</h4>
-        <p class="text-center" style="margin-bottom: 0px;">Welcome back! Sign in to your account</p>
-        <img class="img-fluid" src="/static/img/avocado_mini.png" alt="Responsive image">
+      <article class="card-body mx-auto py-0" >
+        <h4 class="card-title mt-3 text-center font-weight-bold">Login</h4>
+        <p class="text-center mb-0 font-weight-bold">Welcome back! Sign in to your account</p>
+        <img class="rounded mx-auto d-block" src="/static/img/avocado_mini.png" alt="Animated Avocado">
 
-        <form method="post">
+        <form class="mt-2" method="post">
 
           <div class="form-group input-group">
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fa fa-user"></i> </span>
             </div>
-            <input name="" class="form-control" placeholder="Username" type="text">
+            {{ form.username(class="form-control", placeholder="Username") }}
           </div> <!-- form-group// -->
 
           <div class="form-group input-group">
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
             </div>
-            <input class="form-control" placeholder="Password" type="password">
+            {{ form.password(class="form-control", placeholder="Password") }}
           </div> <!-- form-group// -->
 
           <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+            {{ form.submit(class="btn btn-primary btn-block")}}
+    
           </div> <!-- form-group// -->
           
-          <p class="text-center">Don't have an account? <a href="{{ url_for('register_page') }}">Register</a> </p>
+          <p class="text-center">Don't have an account? <a href="{{ url_for('register_page') }}">Sign Up</a> </p>
         </form>
       </article>
+    </div>
+  </div>
 </body>
 {% endblock %}

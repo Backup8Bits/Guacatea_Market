@@ -1,13 +1,27 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Login Page
+  Home Page
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="/static/css/cover.css">
 {% endblock %}
 
 {% block content %}
-<main style="background-color: #547ab6">
-  <div class="container">
-    <p class="text-center">You are in the home page</p>  
+<body class="text-center">
+
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">Guacatea Market.</h1>
+      <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+      <p class="lead">
+        <a href="#" class="btn btn-lg btn-secondary">Let's Go</a>
+      </p>
+    </main>
+
   </div>
-</main>
+
+</body>
 {% endblock %}
