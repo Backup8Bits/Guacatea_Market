@@ -1,7 +1,8 @@
 from market import app
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from market.forms import RegisterForm, LoginForm
-from market.models import User
+from market.models import User, Item
+from market import db
 
 @app.route('/')
 @app.route('/home')
@@ -18,7 +19,8 @@ def market_page():
 def register_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        return redirect(url_for('home_page'))
+        flash(f'You have an account now', category='success')
+        return redirect(url_for('market_page'))
 
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
@@ -31,7 +33,8 @@ def register_page():
 def login_page():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('home_page'))
+        flash(f'You are logging now!', category='success')
+        return redirect(url_for('market_page'))
         
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():

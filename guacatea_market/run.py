@@ -1,4 +1,3 @@
-
 # Core libraries
 import os
 
@@ -18,4 +17,3 @@ if __name__ == '__main__':
     DEBUG = os.getenv("DEBUG", False)
 
     app.run(host=HOST, port=PORT, debug=DEBUG)
-    
