@@ -5,7 +5,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String(60), nullable=False)
+    password_hash = db.Column(db.String(60), nullable=False)
     cash = db.Column(db.Integer, nullable=False, default=200)
     items = db.relationship('Item', backref='owned_user', lazy=True)
 

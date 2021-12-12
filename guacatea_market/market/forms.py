@@ -11,6 +11,17 @@ class RegisterForm(FlaskForm):
     password_2 = PasswordField('Password2', validators=[DataRequired(), EqualTo('password_1')])
     submit = SubmitField('Create Account')
 
+    def validate_username(self, user_to_verify):
+        user = User.query.filter_by(username=user_to_verify.data).first()
+        # Si user es True entonces hay un usuario con ese nombre registrado
+        if user:
+            raise ValidationError('That username already exists. Try another one please')
+    
+    def validate_email(self, email_to_verify):
+        email = User.query.filter_by(email=email_to_verify.data).first()
+        if email:
+            raise ValidationError('That email already exists. Try another one please')
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
