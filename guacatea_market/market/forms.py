@@ -8,8 +8,10 @@ class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password_1 = PasswordField('Password1', validators=[DataRequired(), Length(min=6)])
-    password_2 = PasswordField('Password2', validators=[DataRequired(), EqualTo('password_1')])
+    password_2 = PasswordField('Password2', validators=[DataRequired(), EqualTo(
+                                'password_1',  message='Passwords must match')])
     submit = SubmitField('Create Account')
+
 
     def validate_username(self, user_to_verify):
         user = User.query.filter_by(username=user_to_verify.data).first()

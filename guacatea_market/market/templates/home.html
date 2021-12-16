@@ -9,19 +9,15 @@
 {% endblock %}
 
 {% block content %}
-<body class="text-center">
-
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-
+<div class="text-center">
+  <div class="cover-container mt-5 h-100 px-3 py-5 mx-auto">
     <main role="main" class="inner cover">
-      <h1 class="cover-heading">Guacatea Market.</h1>
+      <h1 class="cover-heading">Guacatea Market</h1>
       <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
       <p class="lead">
-        <a href="#" class="btn btn-lg btn-secondary">Let's Go</a>
+        <a href="{{ url_for('market_page') }}" class="btn btn-lg btn-secondary">Let's Go</a>
       </p>
     </main>
-
   </div>
-
-</body>
+</div>
 {% endblock %}
