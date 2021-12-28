@@ -3,7 +3,7 @@
 ## 🥑 ¿Qué es Guacatea_Market?
 <p>
   Es un E-Comerce construído con Flask y Postgresql.<br>
-  Donde podra comprar y vender sus artículos.
+  Donde podra comprar y vender arte digital de artistas independientes.
 </p>
 
 ## 📂 Link para Clonar Repositorio  
@@ -17,7 +17,6 @@ Se require de tener instalado `docker` y `docker-compose`, para poder hacer uso 
 
 
 ## 🏆 Integrantes 
--
--
--
--
+- Lino Fernando Barrientos Cárdenas
+- Neimv Zephon Zatara Lyra
+- Magno Martinez
