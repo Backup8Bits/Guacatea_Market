@@ -17,7 +17,6 @@ Se require de tener instalado `docker` y `docker-compose`, para poder hacer uso 
 
 
 ## 🏆 Integrantes 
--
--
--
--
+- Lino Fernando Barrientos Cárdenas
+- Neimv Zephon Zatara Lyra
+- Magno Martinez
