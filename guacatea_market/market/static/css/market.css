@@ -46,3 +46,23 @@ body {
   background: #343a40;
 }
 
+img.card-img-top {
+  height: 225px;
+  width: 100%;
+  display: block;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #bbb4b4;
+  text-shadow: 3px 0px 0 #141111;
+  opacity: .5;
+}
+
+.close:hover {
+  color: #fff;
+  text-decoration: none;
+}

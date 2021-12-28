@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background:#93aed9;
+}
+
+.text-center {
+  padding-top: 5px;
+  font-size: 1.44rem;
+  font-style: italic;
+  color: #3f3d56;
+  line-height: 1.15;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  max-height: 50vh;
+}
+
+.btn-primary {
+  color: #f2f2f2;
+  background-color: #3f3d56;
+  border-color: #3f3d56;
+}

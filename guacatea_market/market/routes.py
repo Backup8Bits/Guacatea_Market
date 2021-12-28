@@ -28,6 +28,7 @@ def register_page():
                             )
         db.session.add(user_to_create)
         db.session.commit()
+        login_user(user_to_create)
         flash(f'You have an account now', category='success')
         return redirect(url_for('market_page'))
 
@@ -43,8 +44,10 @@ def login_page():
     form = LoginForm()
     if form.validate_on_submit():
         user_to_verify = User.query.filter_by(username=form.username.data).first()
+        # 1ro Verifica que el usuario exista
+        # 2do Verifica que la contraseña sea correcta
         if user_to_verify and user_to_verify.check_password(
-                            attempted_password=form.password.data):
+                                                attempted_password=form.password.data):
             login_user(user_to_verify)
             flash(f'You are logging now! Welcome {user_to_verify.username}', category='success')
             return redirect(url_for('market_page'))
@@ -57,13 +60,14 @@ def login_page():
 
     return render_template('login.html', form=form)
 
+
 @app.route("/logout")
 def logout_page():
     logout_user()
     flash(f"You've been logged out now ", category='info')
     return redirect(url_for('home_page'))
 
+
 @app.errorhandler(404)
 def not_found(e):
-# defining function
   return render_template("404.html"), 404
