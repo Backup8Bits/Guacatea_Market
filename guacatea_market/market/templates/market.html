@@ -9,50 +9,165 @@
 {% endblock %}
 
 {% block content %}
-<body>
-
-  <main role="main">
-    <section class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">Guacatea Market</h1>
-        <p class="lead">
-          Welcome to our market, here you can offer and buy the best independent digital art that exists on the internet.
-          To be able to access a better user experience, log in or create an account. This way you will unlock new features.
-        </p>
-        <p>
-          <a href="{{ url_for('login_page') }}" class="btn btn-primary my-2">Login</a>
-          <a href="{{ url_for('register_page') }}" class="btn btn-secondary my-2">Sign up</a>
-        </p>
-      </div>
-    </section>
-    <div class="album py-5 bg-dark">
-      <div class="container">
-        <div class="row">
-          {% for i in range(1,10) %}
-          {% include "includes/m_info.html" %}
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <a href="https://placeholder.com">
-                  <img class="card-img-top" src="https://via.placeholder.com/288x225?text=ThumbnailImage" alt="Placeholder">
-                </a>
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-light" data-toggle="modal" data-target="#Modal-MoreInfo">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-light" data-toggle="modal" data-target="#Modal-BuyConfirmation">Buy</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
+<main role="main">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Guacatea Market</h1>
+      <p class="lead">
+        Welcome to our market, here you can offer and buy the best independent digital art that exists on the internet.
+        To be able to access a better user experience, log in or create an account. This way you will unlock new features.
+      </p>
+      <p>
+        <a href="{{ url_for('login_page') }}" class="btn btn-primary my-2">Login</a>
+        <a href="{{ url_for('register_page') }}" class="btn btn-secondary my-2">Sign up</a>
+      </p>
+    </div>
+  </section>
+  <div class="album py-5 bg-dark">
+    <div class="container">
+      <div class="row">
+        {% for i in range(1,10) %}
+        {% include "includes/m_info.html" %}
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <a href="https://placeholder.com">
+                <img class="card-img-top" src="https://via.placeholder.com/288x225?text=ThumbnailImage" alt="Placeholder">
+              </a>
+              <div class="card-body">
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-light" data-toggle="modal" data-target="#Modal-MoreInfo">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-toggle="modal" data-target="#Modal-BuyConfirmation">Buy</button>
                   </div>
+                  <small class="text-muted">9 mins</small>
                 </div>
               </div>
-            </div> 
-          {% endfor %}
+            </div>
+          </div> 
+        {% endfor %}
 
-        </div>
       </div>
     </div>
-  </main>
-</body>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="page-footer font-small indigo">
+
+  <!-- Footer Links -->
+  <div class="container">
+
+    <!-- Grid row-->
+    <div class="row text-center d-flex justify-content-center pt-5 mb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#" class="text-light">About us</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#" class="text-light">Products</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#" class="text-light">Donate</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#" class="text-light">Contact</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#" class="text-light">Help</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+    <hr class="rgba-white-light" style="margin: 0 15%;">
+
+    <!-- Grid row-->
+    <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
+
+      <!-- Grid column -->
+      <div class="col-md-8 col-12 mt-5">
+        <p style="line-height: 1.7rem">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem
+          aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+          explicabo.
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+    <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
+
+    <!-- Grid row-->
+    <div class="row pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-12">
+
+        <div class="h-100 mb-5 d-flex justify-content-center align-items-center">
+
+          <!-- Facebook -->
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic">
+            <i class="fab fa-twitter fa-lg white-text mr-4"> </i>
+          </a>
+          <!-- Google +-->
+          <a class="gplus-ic">
+            <i class="fab fa-google-plus-g fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Linkedin -->
+          <a class="li-ic">
+            <i class="fab fa-linkedin-in fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Instagram-->
+          <a class="ins-ic">
+            <i class="fab fa-instagram fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Pinterest-->
+          <a class="pin-ic">
+            <i class="fab fa-pinterest fa-lg white-text"> </i>
+          </a>
+
+        </div>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+
+  </div>
+  <!-- Footer Links -->
+
+</footer>
+<!-- Footer -->
+
 {% endblock %}
 
