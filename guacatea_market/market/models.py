@@ -1,3 +1,4 @@
+import datetime
 from market import db
 from market import bcrypt
 from market import login_manager
@@ -16,6 +17,12 @@ class User(db.Model, UserMixin):
     cash = db.Column(db.Integer, nullable=False, default=200)
     items = db.relationship('Item', backref='owned_user', lazy=True)
     
+    @property
+    def prettier_cash(self):
+        if len(str(self.cash)) >= 4:
+            return f' {str(self.cash)[:-3]},{str(self.cash)[-3:]}$'
+        else:
+            return f' {self.cash}$'
 
     @property
     def password(self):
@@ -36,5 +43,16 @@ class Item(db.Model):
     name = db.Column(db.String(30), nullable=False, unique=True)
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1024), nullable=False, unique=True)
-    owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    cathegory = db.Column(db.String(20), nullable=True)
+    image = db.Column(db.String(100), nullable=False)#,default=default.png)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.date.today())
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    @property
+    def date_format(self):
+        return self.date_format
+    
+    @date_format.setter
+    def date_format(self, date_without_format):
+        self.date_posted = date_without_format.strftime("%m-%d-%Y")
 

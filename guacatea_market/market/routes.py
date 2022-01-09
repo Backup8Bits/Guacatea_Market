@@ -4,7 +4,7 @@ from market import app
 from market import db
 from market.forms import LoginForm, RegisterForm
 from market.models import Item, User
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 
 @app.route('/')
@@ -61,7 +61,13 @@ def login_page():
     return render_template('login.html', form=form)
 
 
+@app.route("/profile")
+@login_required
+def profile_page():
+    return render_template('profile.html')
+
 @app.route("/logout")
+@login_required
 def logout_page():
     logout_user()
     flash(f"You've been logged out now ", category='info')

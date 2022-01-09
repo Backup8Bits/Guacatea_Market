@@ -19,7 +19,7 @@
       </p>
       <p>
         <a href="{{ url_for('login_page') }}" class="btn btn-primary my-2">Login</a>
-        <a href="{{ url_for('register_page') }}" class="btn btn-secondary my-2">Sign up</a>
+        <a href="{{ url_for('register_page') }}" class="btn btn-success my-2">Sign up</a>
       </p>
     </div>
   </section>
@@ -30,16 +30,22 @@
         {% include "includes/m_info.html" %}
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
+              <!-- Imagen del articulo -->
               <a href="https://placeholder.com">
                 <img class="card-img-top" src="https://via.placeholder.com/288x225?text=ThumbnailImage" alt="Placeholder">
               </a>
               <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <!-- Descripcion del articulo -->
+                <p class="card-text">
+                  This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                </p>
                 <div class="d-flex justify-content-between align-items-center">
+                  
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-light" data-toggle="modal" data-target="#Modal-MoreInfo">View</button>
                     <button type="button" class="btn btn-sm btn-outline-light" data-toggle="modal" data-target="#Modal-BuyConfirmation">Buy</button>
                   </div>
+                  <!-- Fecha de publicacion -->
                   <small class="text-muted">9 mins</small>
                 </div>
               </div>
@@ -110,11 +116,13 @@
 
       <!-- Grid column -->
       <div class="col-md-8 col-12 mt-5">
-        <p style="line-height: 1.7rem">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+        <p style="line-height: 1.7rem">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem
           aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
           explicabo.
-          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p>
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
+        </p>
       </div>
       <!-- Grid column -->
 
