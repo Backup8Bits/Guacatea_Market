@@ -1,67 +1,71 @@
 <!-- Modal de informacion extra(descripcion) -->
-
-  <div class="modal fade" id="Modal-MoreInfo" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+<div class="modal fade" id="Modal-MoreInfo" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title">Product in the cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-3 text-center">
+            <i class="fas fa-shopping-cart fa-4x text-info"></i>
           </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Add to cart</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <div class="col-9">
+            <p>Do you need more time to make a purchase decision?</p>
+            <p>No pressure, your product will be waiting for you in the cart.</p>
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Go to the cart</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
   </div>
+</div>
 
+<!-- Modal de venta de articulos -->
 
-
-  <!-- Modal de compra -->
-  
-  <div class="modal fade" id="Modal-BuyConfirmation" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content bg-dark text-white">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-4">.col-md-4</div>
-                <div class="col-md-4 ml-auto">.col-md-8 .ml-auto</div>
-              </div>
-              <div class="row">
-                <div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
-                <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 ml-auto">.col-md-6 .ml-auto</div>
-              </div>
-              <div class="row">
-                <div class="col-8 col-sm-6">
-                  Level 2: .col-8 .col-sm-6
-                </div>
-                <div class="col-4 col-sm-6">
-                  Level 2: .col-4 .col-sm-6
-                </div>
-              </div>
+<div class="modal fade" id="Modal-BuyConfirmation" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title">Related article</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="bg-image hover-overlay ripple shadow-2-strong" data-mdb-ripple-color="light">
+              <img src="/static/img/arte_1.jpg" class="img-fluid" alt="Arte Digital">
+              <a href="#!">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </a>
             </div>
           </div>
-          <form method="post">
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Buy Picture</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </form>
+
+          <div class="col-md-6 mb-4">
+            <p class= "font-weight-bold">Doloremque vero ex debitis veritatis?</p>
+            <p class="font-weight-light">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod itaque voluptate
+              nesciunt laborum incidunt. Officia, quam consectetur. Earum eligendi aliquam
+              illum alias.
+            </p>
+          </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Read more</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
   </div>
+</div>
