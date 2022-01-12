@@ -7,7 +7,9 @@ from flask_login import LoginManager
 
 app = Flask(__name__, static_url_path='/static')
 # Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://guacatea:guacatea@db:5432/guacatea'
+app.config[
+    'SQLALCHEMY_DATABASE_URI'
+] = 'postgresql://guacatea:guacatea@db:5432/guacatea'
 app.config['SECRET_KEY'] = 'dfadc53023b12714ffe637bd2fad5fb3'
 db = SQLAlchemy(app)
 # migrate = Migrate(app, db)

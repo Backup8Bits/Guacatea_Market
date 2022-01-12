@@ -1,8 +1,4 @@
-FROM python:3.9-alpine
-
-RUN apk update && \
-    apk add postgresql-dev gcc python3-dev \
-    musl-dev build-base libffi-dev
+FROM python:3.9-buster
 
 WORKDIR /opt/app
 COPY guacatea_market .
