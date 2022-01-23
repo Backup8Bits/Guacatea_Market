@@ -71,3 +71,14 @@ def logout_page():
 @app.errorhandler(404)
 def not_found(e):
   return render_template("404.html"), 404
+
+@app.route('/')
+def index():
+    products = Product.query.all()
+    return render_template('home.html',products=products)
+def getproductitem():
+    itemid = product.id
+    productname = product.name
+    productname = CartItem(product_id=itemid)
+    db.session.add(product)
+    db.session.commit()

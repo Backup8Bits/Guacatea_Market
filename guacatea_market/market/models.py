@@ -38,3 +38,19 @@ class Item(db.Model):
     description = db.Column(db.String(1024), nullable=False, unique=True)
     owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
 
+class ProductItem(db.Model):
+     __tablename__='products'
+    id_2 = db.Column(db.Integer,primary_key=True)
+    name_2 = db.Column(db.String(64),unique=True)
+    descrip = db.Column(db.Text,unique=True,nullable=True)
+    price = db.Column(db.Float,nullable=False)
+    img = db.Column(db.String(64),unique=True)
+    cartitems = db.relationship('CartItem', backref='Product')
+
+    def __repr__(self):
+            return '<ProductName %r>' % self.name_2
+
+    class CartItem(db.Model):
+    __tablename__='cartitems'
+    id = db.Column(db.Integer,primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
