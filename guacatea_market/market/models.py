@@ -15,9 +15,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String(60), nullable=False)
     cash = db.Column(db.Integer, nullable=False, default=200)
-    sex = db.Column(db.String, nullable=True, unique=False)
-    address = db.Column(db.String, nullable=True, unique=False)
+    # address = db.Column(db.String, nullable=True, unique=False)
     items = db.relationship('Item', backref='owned_user', lazy=True)
+    cuadros = db.relationship('Author', backref='author', lazy=True)
 
     def __repr__(self):
         return f'User: {self.username}'
@@ -49,7 +49,7 @@ class Item(db.Model):
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1024), nullable=False)
     # El autor tiene que tener una relacion con el user
-    # author = db.Column(db.String, nullable=False, unique=True)
+    # author = db.Column(db.Integer, db.ForeignKey('user.id'))
     image = db.Column(db.String(100), nullable=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -65,3 +65,6 @@ class Item(db.Model):
     def date_format(self, date_without_format):
         self.date_posted = date_without_format.strftime('%m/%d/%Y - %H:%M:%S')
 
+class Author(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

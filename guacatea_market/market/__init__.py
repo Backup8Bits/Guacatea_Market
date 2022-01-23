@@ -3,16 +3,17 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-# from flask_migrate import Migrate
+
 
 app = Flask(__name__, static_url_path='/static')
 # Configuración de la base de datos
 app.config[
     'SQLALCHEMY_DATABASE_URI'
-] = 'postgresql://guacatea:guacatea@db:5432/guacatea'
+        ] = 'postgresql://guacatea:guacatea@db:5432/guacatea'
+
 app.config['SECRET_KEY'] = 'dfadc53023b12714ffe637bd2fad5fb3'
 db = SQLAlchemy(app)
-# migrate = Migrate(app, db)
+
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login_page'

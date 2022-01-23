@@ -21,12 +21,12 @@ def run_app():
 
 @cli.command()
 def migrate_db():
-    for i in range(3):
+    for _ in range(3):
         try:
             db.create_all()
             print("db created")
             break
-        except Exception:
+        except Exception:  
             time.sleep(5)
             print("Creating db")
 

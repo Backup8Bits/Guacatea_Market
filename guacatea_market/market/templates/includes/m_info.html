@@ -1,9 +1,9 @@
 <!-- Modal de informacion extra(descripcion) -->
-<div class="modal fade" id="Modal-MoreInfo" tabindex="-1" role="dialog">
+<div class="modal fade" id="Modal-MoreInfo-{{item.id}}" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title">Product in the cart</h5>
+        <h5 class="modal-title">{{item.name}} - {{item.price}}$</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </div>
@@ -18,23 +18,25 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Go to the cart</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
-      </div>
+      <form method="POST">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Go to the cart</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
-<!-- Modal de venta de articulos -->
 
-<div class="modal fade" id="Modal-BuyConfirmation" tabindex="-1" role="dialog">
+<!-- Modal de venta de articulos -->
+<div class="modal fade" id="Modal-BuyConfirmation-{{item.id}}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title">Related article</h5>
+        <h5 class="modal-title">{{item.name}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -43,7 +45,7 @@
         <div class="row">
           <div class="col-md-6 mb-4">
             <div class="bg-image hover-overlay ripple shadow-2-strong" data-mdb-ripple-color="light">
-              <img src="/static/img/arte_1.jpg" class="img-fluid" alt="Arte Digital">
+              <img src="/static/img/items/img_1.jpg" class="img-fluid" alt="Arte Digital">
               <a href="#!">
                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
               </a>
@@ -51,21 +53,30 @@
           </div>
 
           <div class="col-md-6 mb-4">
-            <p class= "font-weight-bold">Doloremque vero ex debitis veritatis?</p>
+            <p class= "font-weight-bold">
+              Are you wanna sure to buy this '{{item.name}}' for {{item.price}}$ ?
+            </p>
             <p class="font-weight-light">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod itaque voluptate
-              nesciunt laborum incidunt. Officia, quam consectetur. Earum eligendi aliquam
-              illum alias.
+              <!-- TODO: Hacer una pregunta de confirmacion de compra -->
+              {{item.description}}
+            </p>
+            <br>
+            <p class="font-weight-bold">
+              Click down here if you wanna but it 👇
             </p>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Read more</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
-      </div>
+      <form method="post">
+        {{purchase_form.hidden_tag()}}
+        <div class="modal-footer">
+          <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">
+          {{purchase_form.submit(class="btn btn-primary")}}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

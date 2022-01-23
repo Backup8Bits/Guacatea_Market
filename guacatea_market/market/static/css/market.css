@@ -2,6 +2,7 @@
   --jumbotron-padding-y: 3rem;
 }
 
+
 body {
   color: #fff;
 }
@@ -65,9 +66,8 @@ a:hover {
   border: none;
 }
 
-.card-body {
+.card-body, .card-header {
   background: #343a40f5;
-  
 }
 
 img.card-img-top {
@@ -93,4 +93,23 @@ img.card-img-top {
 
 a { 
   color: #fff;
+}
+
+.text-subtitle-light {
+  color: #90c3f7!important;
+}
+ 
+.colored-link-card {
+  color: #28a745!important;
+}
+
+.colored-link-card:hover {
+  color: #61ee1f!important;
+}
+
+.navbar-deg {
+  background: #343a40 !important;
+  background: linear-gradient(63deg,#343a40 10%, #1d2124 100%)!important;
+  background: -webkit-linear-gradient(63deg,#343a40 10%, #1d2124 100%)!important;
+  background: -moz-linear-gradient(63deg,#343a40 10%, #1d2124 100%)!important;
 }
