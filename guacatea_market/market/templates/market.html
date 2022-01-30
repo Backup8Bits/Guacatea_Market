@@ -51,7 +51,7 @@
                   {{item.description}}
                 </p>
                 <p class="text-right">
-                  <a href="#1" class="colored-link-card">Author</a>
+                  <a href="{{ url_for('profile_page', user_id=item.author_user.id) }}" class="colored-link-card">{{item.author_user.username}}</a>
                 </p>
                 <div class="d-flex justify-content-between align-items-center">
                   

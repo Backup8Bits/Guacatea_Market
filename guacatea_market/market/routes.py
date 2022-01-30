@@ -16,19 +16,23 @@ def home_page():
 
 @app.route('/market', methods=["GET", "POST"])
 def market_page():   
-    items = Item.query.all()
     purchase_form = PurchaseItem()
     if request.method == "POST":
         purchased_item = request.form.get('purchased_item')
         p_item_object = Item.query.filter_by(name=purchased_item).first()
         if p_item_object:
-            p_item_object.owner = current_user.id
-            current_user.cash -= p_item_object.price
-            db.session.commit()
+            if current_user.can_buy(p_item_object):
+                p_item_object.buy(current_user)
+                flash(f"Congratulations! You purchased the '{p_item_object.name}' for {p_item_object.price}$", category='success')
+            else:
+                flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
+        else:
+            flash(f"We can't find the item '{p_item_object.name}' right now. Please try later.", category='error')
+        return redirect(url_for('market_page'))
+
     if request.method == "GET":
-        pass
-        # items = Item.query.filter_by(owner=None)
-    return render_template("market.html", items=items, purchase_form=purchase_form)
+        items = Item.query.filter_by(owner=None)
+        return render_template("market.html",items=items, purchase_form=purchase_form)
         
 
 
@@ -49,7 +53,7 @@ def register_page():
         db.session.add(user_to_create)
         db.session.commit()
         login_user(user_to_create)
-        flash(f'You have an account now', category='success')
+        flash(f'Account created successfully! You are now logged in as {user_to_create.username}', category='success')
         return redirect(url_for('market_page'))
 
     if form.errors != {}: #If there are not errors from the validations
@@ -85,10 +89,10 @@ def login_page():
 def cart_page():
     return render_template('mycart.html')
     
-@app.route("/profile")
+@app.route("/profile/<int:user_id>")
 @login_required
-def profile_page():
-    user = current_user
+def profile_page(user_id):
+    user = User.query.filter_by(id=user_id).first()
     return render_template('profile.html', user=user)
 
 @app.route("/logout")

@@ -12,6 +12,7 @@ app.config[
         ] = 'postgresql://guacatea:guacatea@db:5432/guacatea'
 
 app.config['SECRET_KEY'] = 'dfadc53023b12714ffe637bd2fad5fb3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
