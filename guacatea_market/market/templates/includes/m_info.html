@@ -19,8 +19,10 @@
         </div>
       </div>
       <form method="POST">
+        {{cart_form.hidden_tag()}}
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Go to the cart</button>
+          <input id="added_item" name="added_item" type="hidden" value="{{item.name}}">
+          {{cart_form.submit(class="btn btn-primary")}}
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
@@ -67,7 +69,7 @@
           </div>
         </div>
       </div>
-      <form method="post">
+      <form method="POST">
         {{purchase_form.hidden_tag()}}
         <div class="modal-footer">
           <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">

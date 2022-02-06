@@ -16,7 +16,7 @@
         <h1 class="display-3 my-5" style="font-family: fantasy; color: #29271e;">Guacatea Market</h1>
       </div>
     </section>
-    {% else %}
+  {% else %}
     <section class="jumbotron text-center">
       <div class="container">      
         <h1 class="jumbotron-heading">Guacatea Market</h1>
@@ -30,7 +30,7 @@
         </p>
       </div>
     </section>
-    {% endif %}
+  {% endif %}
   <div class="album py-5 bg-dark px-4">
     <div class="container-fluid px-0">
       <div class="row">
@@ -51,7 +51,11 @@
                   {{item.description}}
                 </p>
                 <p class="text-right">
-                  <a href="{{ url_for('profile_page', user_id=item.author_user.id) }}" class="colored-link-card">{{item.author_user.username}}</a>
+                  {% if item.author_user.id %}
+                    <a href="{{ url_for('profile_page', user_id=item.author_user.id) }}" class="colored-link-card">{{item.author_user.username}}</a>
+                  {% else %}
+                    <a href="#1" class="colored-link-card disabled" aria-disabled="true">Anonymous</a>
+                  {% endif %}
                 </p>
                 <div class="d-flex justify-content-between align-items-center">
                   
