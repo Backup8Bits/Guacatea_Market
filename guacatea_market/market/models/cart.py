@@ -20,4 +20,8 @@ class Cart(db.Model):
         self.items.append(a_item_object)
         db.session.add(a_item_object)
         db.session.commit()
+        
+    def remove_item_from_cart(self, r_item_object):
+        self.items.remove(r_item_object)
+        db.session.commit()
     

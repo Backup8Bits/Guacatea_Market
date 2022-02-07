@@ -3,7 +3,7 @@ from flask import flash, redirect, render_template, url_for, request
 
 from market import app
 from market import db
-from market.forms import LoginForm, RegisterForm, PurchaseItemForm, AddCartItemForm
+from market.forms import LoginForm, RegisterForm, PurchaseItemForm, AddCartItemForm, RemoveCartItemForm
 from market.models.user import User
 from market.models.item import Item
 from market.models.cart import Cart
@@ -105,9 +105,11 @@ def login_page():
 @app.route("/mycart")
 @login_required
 def cart_page():
+    cart_form = RemoveCartItemForm()
     user_cart = Cart.query.filter_by(userid=current_user.id).first()
-    return render_template('mycart.html', user_cart=user_cart)
-    
+    return render_template('mycart.html', user_cart=user_cart, cart_form=cart_form)
+
+
 @app.route("/profile/<int:user_id>")
 @login_required
 def profile_page(user_id):

@@ -34,3 +34,6 @@ class PurchaseItemForm(FlaskForm):
 
 class AddCartItemForm(FlaskForm):
     submit = SubmitField('Add to Cart')
+
+class RemoveCartItemForm(FlaskForm):
+    submit = SubmitField('Remove')
