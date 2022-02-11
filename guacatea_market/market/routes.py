@@ -132,21 +132,16 @@ def logout_page():
     return redirect(url_for('home_page'))
 
 @app.route("/upload", methods=['GET', 'POST'])
+@login_required
 def upload_page():
     upload_form = SellItemForm()
     if upload_form.validate_on_submit():
-        def upload():
-            imagen = upload_form.image.data
-            picture_fn = secure_filename(imagen.filename)
-            route_image = os.path.join(app.root_path, 'static/uploads' , picture_fn)
-            imagen.save(route_image)   
-            return route_image
-        
+        form_picture = upload_form.image.data
         item_to_create = Item(name=upload_form.name.data,
             price=upload_form.price.data,
             description=upload_form.description.data,
             creator=current_user.id,
-            image=upload(),
+            image=save_picture(form_picture),
             )
         db.session.add(item_to_create)
         db.session.commit()
@@ -157,20 +152,29 @@ def upload_page():
             flash(f'There was an error with uploading your item: {err_msg}', category='danger')
     return render_template('upload_page.html', upload_form=upload_form)
 
+@app.route("/myitems")
+@login_required
+def my_items():
+    my_items = Item.query.filter_by(owner=current_user.id)
+    return render_template('my_items.html', my_items=my_items)
+
+
 @app.errorhandler(404)
 def not_found(e):
   return render_template("404.html"), 404
 
 
-# def save_picture(form_picture):
-#     random_hex = secrets.token_hex(8)
-#     _, f_ext = os.path.splitext(form_picture.filename)
-#     picture_fn = random_hex + f_ext
-#     picture_path = os.path.join(app.root_path, 'static/uploads', picture_fn)
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/uploads', picture_fn)
 
-#     output_size = (250, 250)
-#     i = Image.open(form_picture)
-#     i.thumbnail(output_size)
-#     i.save(picture_path)
+    output_size = (800, 800)
+    im = Image.open(form_picture)
+    if im.mode in ("RGBA", "P"):
+        im = im.convert("RGB")
+    im.thumbnail(output_size)
+    im.save(picture_path)
 
-#     return picture_fn
+    return picture_path

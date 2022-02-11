@@ -1,6 +1,7 @@
 from market import db
 from market.models import *
 
+
 carts_items = db.Table('carts_items',
             db.Column('cart.userid', db.Integer, db.ForeignKey('cart.userid')),
             db.Column('item.id', db.Integer, db.ForeignKey('item.id'))
@@ -24,4 +25,7 @@ class Cart(db.Model):
     def remove_item_from_cart(self, r_item_object):
         self.items.remove(r_item_object)
         db.session.commit()
+    
+    def get_total_price(self):
+        return sum(item.price for item in self.items)
     
