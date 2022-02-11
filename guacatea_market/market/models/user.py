@@ -41,3 +41,11 @@ class User(db.Model, UserMixin):
     def check_password(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
+    def can_buy(self, item_obj):
+        return self.cash >= item_obj.price
+    
+    def buy(self, item_obj, u_to_pay):
+        item_obj.owner = self.id
+        self.cash -= item_obj.price
+        u_to_pay.cash += item_obj.price
+        db.session.commit()

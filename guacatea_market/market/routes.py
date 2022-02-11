@@ -1,9 +1,12 @@
+import os
+import secrets
+from PIL import Image
 from flask import flash, redirect, render_template, url_for, request
-
+from werkzeug.utils import secure_filename
 
 from market import app
 from market import db
-from market.forms import LoginForm, RegisterForm, PurchaseItemForm, AddCartItemForm, RemoveCartItemForm
+from market.forms import LoginForm, RegisterForm, PurchaseItemForm, AddCartItemForm, RemoveCartItemForm, SellItemForm
 from market.models.user import User
 from market.models.item import Item
 from market.models.cart import Cart
@@ -26,7 +29,7 @@ def market_page():
         p_item_object = Item.query.filter_by(name=purchased_item).first()
         if p_item_object:
             if current_user.can_buy(p_item_object):
-                p_item_object.buy(current_user)
+                current_user.buy(p_item_object, p_item_object.author_user)
                 flash(f"Congratulations! You purchased the '{p_item_object.name}' for {p_item_object.price}$", category='success')
             else:
                 flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
@@ -57,13 +60,6 @@ def register_page():
                               email=form.email.data,
                               password=form.password_1.data,
                             )
-        # item_to_create = Item(name='Remember the Night',
-        #     price=100,
-        #     description="Everything about the image is very fantastical and surreal and dreamlike, in fact, you get the idea that your soul might have died and gone to hell just for a second suddenly come back to life.",
-        #     image='/static/img/items/img_4.jpg'
-        #     )
-        # db.session.add(item_to_create)
-
         db.session.add(user_to_create)
         db.session.commit()
         login_user(user_to_create)
@@ -102,12 +98,24 @@ def login_page():
 
     return render_template('login.html', form=form)
 
-@app.route("/mycart")
+@app.route("/mycart", methods=["GET", "POST"])
 @login_required
 def cart_page():
-    cart_form = RemoveCartItemForm()
+    remove_form = RemoveCartItemForm()
     user_cart = Cart.query.filter_by(userid=current_user.id).first()
-    return render_template('mycart.html', user_cart=user_cart, cart_form=cart_form)
+    if request.method == "POST":
+        removed_item = request.form.get('removed_item')
+        r_item_object = Item.query.filter_by(name=removed_item).first()
+        if r_item_object:
+            user_cart.remove_item_from_cart(r_item_object)
+            flash(f"The item '{r_item_object.name}' was removed successfully from your cart", category='success')
+        else:
+            flash(f"The item '{r_item_object.name}' has already been removed from your cart", category='danger')
+
+    if request.method == "GET":        
+        pass
+        #TODO: Verificar porque siempre la pagina esta en modo post
+    return render_template('mycart.html', user_cart=user_cart, remove_form=remove_form)
 
 
 @app.route("/profile/<int:user_id>")
@@ -123,7 +131,46 @@ def logout_page():
     flash(f"You've been logged out now ", category='info')
     return redirect(url_for('home_page'))
 
+@app.route("/upload", methods=['GET', 'POST'])
+def upload_page():
+    upload_form = SellItemForm()
+    if upload_form.validate_on_submit():
+        def upload():
+            imagen = upload_form.image.data
+            picture_fn = secure_filename(imagen.filename)
+            route_image = os.path.join(app.root_path, 'static/uploads' , picture_fn)
+            imagen.save(route_image)   
+            return route_image
+        
+        item_to_create = Item(name=upload_form.name.data,
+            price=upload_form.price.data,
+            description=upload_form.description.data,
+            creator=current_user.id,
+            image=upload(),
+            )
+        db.session.add(item_to_create)
+        db.session.commit()
+        flash(f'Created', category='success')
+        return redirect(url_for('market_page'))
+    if upload_form.errors != {}: #If there are not errors from the validations
+        for err_msg in upload_form.errors.items():
+            flash(f'There was an error with uploading your item: {err_msg}', category='danger')
+    return render_template('upload_page.html', upload_form=upload_form)
 
 @app.errorhandler(404)
 def not_found(e):
   return render_template("404.html"), 404
+
+
+# def save_picture(form_picture):
+#     random_hex = secrets.token_hex(8)
+#     _, f_ext = os.path.splitext(form_picture.filename)
+#     picture_fn = random_hex + f_ext
+#     picture_path = os.path.join(app.root_path, 'static/uploads', picture_fn)
+
+#     output_size = (250, 250)
+#     i = Image.open(form_picture)
+#     i.thumbnail(output_size)
+#     i.save(picture_path)
+
+#     return picture_fn
