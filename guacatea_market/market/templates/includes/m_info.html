@@ -19,8 +19,10 @@
         </div>
       </div>
       <form method="POST">
+        {{cart_form.hidden_tag()}}
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Go to the cart</button>
+          <input id="added_item" name="added_item" type="hidden" value="{{item.name}}">
+          {{cart_form.submit(class="btn btn-primary")}}
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
@@ -45,7 +47,7 @@
         <div class="row">
           <div class="col-md-6 mb-4">
             <div class="bg-image hover-overlay ripple shadow-2-strong" data-mdb-ripple-color="light">
-              <img src="/static/img/items/img_1.jpg" class="img-fluid" alt="Arte Digital">
+              <img src="{{item.image}}" class="img-fluid" alt="Arte Digital">
               <a href="#!">
                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
               </a>
@@ -67,7 +69,7 @@
           </div>
         </div>
       </div>
-      <form method="post">
+      <form method="POST">
         {{purchase_form.hidden_tag()}}
         <div class="modal-footer">
           <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">

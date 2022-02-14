@@ -30,9 +30,17 @@ Profile Page
                 <i class="fab fa-twitter fa-lg"></i>
               </button>
             </div>
-            <button type="button" class="btn btn-primary btn-rounded btn-lg">
-              Message now
-            </button>
+            {% if current_user.id == user.id %}
+              <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-rounded btn-lg" role="button">
+                Sell Item
+              </a>
+            {% else %}
+              <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                Message Now
+              </button>
+            {% endif %}
+            
+
             <div class="d-flex justify-content-between text-center mt-5 mb-2">
               <div>
                 <p class="mb-2 h5">8471</p>

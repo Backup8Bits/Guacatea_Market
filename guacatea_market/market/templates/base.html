@@ -19,7 +19,7 @@
   <body>
   <style>
     .budget::after {
-      content: '1';
+      content: attr(count);
       color: #fff;
       padding: 0px 5px;
       position: relative;
@@ -57,7 +57,9 @@
                   <a class="nav-link" href="{{ url_for('cart_page') }}">
                     My Cart
                     <i class="fas fa-shopping-cart hidden"></i>
-                    <span class="budget hidden"></span>
+                    {% if current_user.cart.items|length > 0 %}
+                      <span class="budget hidden" count="{{current_user.cart.items|length}}"></span>
+                    {% endif %}                                 
                   </a>
               </li>
               <li class="nav-item">
