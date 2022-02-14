@@ -29,3 +29,8 @@ class Cart(db.Model):
     def get_total_price(self):
         return sum(item.price for item in self.items)
     
+    # def purchase_all_cart(self):
+    #     for item in self.items:
+    #         db.session.add(item)
+    #         db.session.commit()
+    #         self.items.remove(item)

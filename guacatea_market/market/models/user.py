@@ -40,7 +40,8 @@ class User(db.Model, UserMixin):
 
     def check_password(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
-
+    
+    # Funciones para comprar solo 1 item
     def can_buy(self, item_obj):
         return self.cash >= item_obj.price
     

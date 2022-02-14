@@ -22,3 +22,11 @@ class Item(db.Model):
     @date_format.setter
     def date_format(self, date_without_format):
         self.date_posted = date_without_format.strftime('%m/%d/%Y - %H:%M:%S')
+
+    @property
+    def path_format(self):
+        return self.path_format
+    
+    @path_format.setter
+    def path_format(self, path_absolute):
+        self.image = '/' + '/'.join(path_absolute.split('/')[4:])

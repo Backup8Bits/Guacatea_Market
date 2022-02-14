@@ -142,5 +142,8 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# Upload Folder
+uploads/
+
 # End of https://www.toptal.com/developers/gitignore/api/python
 
