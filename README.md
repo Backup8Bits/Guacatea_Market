@@ -2,8 +2,9 @@
 
 ## 🥑 ¿Qué es Guacatea_Market?
 <p>
-  Es un E-Comerce construído con Flask y Postgresql.<br>
+  Es un E-Comerce robusto construído con Flask, Postgresql y SQLAlchemy.<br>
   Donde podra comprar y vender arte digital de artistas independientes.
+  
 </p>
 
 ## 📂 Link para Clonar Repositorio  
