@@ -3,7 +3,7 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__, static_url_path='/static')
 # Configuración de la base de datos
@@ -25,3 +25,10 @@ ALLOWED_EXTENSIONS = {'jpeg', 'jpg', 'png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 from market import routes
+
+
+# def create_app(config_filename):
+#     app = Flask(__name__, static_url_path='/static')
+#     app.config.from_pyfile(config_filename)
+#     db = SQLAlchemy(app)
+#     return app

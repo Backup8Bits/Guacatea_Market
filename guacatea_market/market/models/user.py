@@ -9,6 +9,21 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(db.Model, UserMixin):
+    """
+    Class that represents a user of the application
+
+    The following attributes of a user are stored in this table:
+        * username - username of the user
+        * email - email address of the user
+        * password_hash - hashed password (using bcrypt)
+        * cash - budget of the user by default is 200
+
+    REMEMBER: Never store the plaintext password in a database!
+    """
+
+
+    __tablename__ = 'user'
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String, nullable=False, unique=True)
@@ -40,12 +55,24 @@ class User(db.Model, UserMixin):
 
     def check_password(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
-
+    
+    """ 
+    Funciones para comprar solo 1 item 
+    """
     def can_buy(self, item_obj):
         return self.cash >= item_obj.price
     
-    def buy(self, item_obj, u_to_pay):
+    def buy(self, item_obj):
         item_obj.owner = self.id
         self.cash -= item_obj.price
-        u_to_pay.cash += item_obj.price
+        item_obj.author_user.cash += item_obj.price
         db.session.commit()
+
+    def can_buy_all(self, cart_obj):
+        return self.cash >= int(cart_obj.get_total_price())
+
+    # def buy(self, item_obj, u_to_pay):
+    #     item_obj.owner = self.id
+    #     self.cash -= item_obj.price
+    #     u_to_pay.cash += item_obj.price
+    #     db.session.commit()

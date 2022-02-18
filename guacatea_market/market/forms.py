@@ -51,3 +51,7 @@ class SellItemForm(FlaskForm):
         ])
     creator = StringField('Author')
     submit = SubmitField('Upload')
+
+class BuyAllItemsForm(FlaskForm):
+    submit = SubmitField('Proceed to Checkout')
+    

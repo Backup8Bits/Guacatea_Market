@@ -3,8 +3,23 @@ from market import db
 from market.models import *
 
 class Item(db.Model):
+    """
+    Class that represents a item of the application
+
+    The following attributes of a item are stored in this table:
+        * name - name of the item
+        * price - price of the item (int)
+        * description - description of the item 
+        * image - path where the item image is stored 
+        * date_posted - date & time that the item registered
+
+    
+    """
+
+    __tablename__ = 'item'
+
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable=False, unique=True)
+    name = db.Column(db.String(30), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1024), nullable=False)
     image = db.Column(db.String(100), nullable=True)
@@ -22,3 +37,11 @@ class Item(db.Model):
     @date_format.setter
     def date_format(self, date_without_format):
         self.date_posted = date_without_format.strftime('%m/%d/%Y - %H:%M:%S')
+
+    @property
+    def path_format(self):
+        return self.path_format
+    
+    @path_format.setter
+    def path_format(self, path_absolute):
+        self.image = '/' + '/'.join(path_absolute.split('/')[4:])
