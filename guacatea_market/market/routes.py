@@ -1,4 +1,3 @@
-from nis import cat
 import os
 import secrets
 from PIL import Image
@@ -7,6 +6,7 @@ from flask import flash, redirect, render_template, url_for, request
 from market import app
 from market import db
 from market.forms import LoginForm, RegisterForm, PurchaseItemForm, AddCartItemForm, RemoveCartItemForm, SellItemForm
+from market.forms import BuyAllItemsForm
 from market.models.user import User
 from market.models.item import Item
 from market.models.cart import Cart
@@ -30,7 +30,7 @@ def market_page():
             p_item_object = Item.query.filter_by(name=purchased_item).first()
             if p_item_object:
                 if current_user.can_buy(p_item_object):
-                    current_user.buy(p_item_object, p_item_object.author_user)
+                    current_user.buy(p_item_object)
                     flash(f"Congratulations! You purchased the '{p_item_object.name}' for {p_item_object.price}$", category='success')
                 else:
                     flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
@@ -63,7 +63,7 @@ def register_page():
         if form.validate_on_submit():
             user_to_create = User(username=form.username.data,
                                 email=form.email.data,
-                                password=form.password_1.data,
+                                password=form.password_1.data
                                 )
             db.session.add(user_to_create)
             db.session.commit()
@@ -112,17 +112,43 @@ def login_page():
 @app.route("/mycart", methods=["GET", "POST"])
 @login_required
 def cart_page():
+    purchase_form = PurchaseItemForm()
+    buy_items_form = BuyAllItemsForm()
     remove_form = RemoveCartItemForm()
     user_cart = Cart.query.filter_by(userid=current_user.id).first()
     if request.method == "POST":
         if current_user.is_authenticated:
+            # Remover Artículos del carrito
             removed_item = request.form.get('removed_item')
             r_item_object = Item.query.filter_by(name=removed_item).first()
             if r_item_object:
                 user_cart.remove_item_from_cart(r_item_object)
                 flash(f"The item '{r_item_object.name}' was removed successfully from your cart", category='success')
-            else:
-                flash(f"The item '{r_item_object.name}' has already been removed from your cart", category='danger')
+            
+            # Proceso de compra de UN artículo
+            purchased_item = request.form.get('purchased_item')
+            p_item_object = Item.query.filter_by(name=purchased_item).first()
+            if p_item_object:
+                if current_user.can_buy(p_item_object):
+                    current_user.buy(p_item_object)
+                    user_cart.remove_item_from_cart(p_item_object)
+                    flash(f"Congratulations! You purchased the '{p_item_object.name}' for {p_item_object.price}$", category='success')
+                else:
+                    flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
+            # Proceso de compra de TODOS los artículos del carrito
+
+            buy_confirmation = request.form.get('buy_confirmation')
+            if buy_confirmation:
+                if current_user.can_buy_all(user_cart):
+                    total_price = user_cart.get_total_price()
+                    for item in user_cart.items:
+                        p_item_object = Item.query.filter_by(name=item.name).first()
+                        current_user.buy(p_item_object)
+                        user_cart.remove_item_from_cart(p_item_object)
+                    flash(f"Congratulations! You purchased the entire cart for {total_price}$", category='success')
+                else:
+                    flash(f"Unfortunately, you don't have enough money to purchase the entire cart", category='danger')         
+       
         else:    
             flash(f"You need to create a account or login to the page for saved any item in a cart", category='danger')
             return redirect(url_for('market_page'))
@@ -130,7 +156,8 @@ def cart_page():
     if request.method == "GET":        
         pass
         #TODO: Verificar porque siempre la pagina esta en modo post
-    return render_template('mycart.html', user_cart=user_cart, remove_form=remove_form)
+    return render_template('mycart.html', user_cart=user_cart, remove_form=remove_form, 
+                            purchase_form=purchase_form, buy_items_form=buy_items_form)
 
 
 @app.route("/profile/<int:user_id>")
@@ -160,18 +187,20 @@ def upload_page():
             )
         db.session.add(item_to_create)
         db.session.commit()
-        flash(f'Created', category='success')
+        flash(f"You published your item '{item_to_create.name}' successfully", category='success')
         return redirect(url_for('market_page'))
+
     if upload_form.errors != {}: #If there are not errors from the validations
         for err_msg in upload_form.errors.items():
-            flash(f'There was an error with uploading your item: {err_msg}', category='danger')
+            flash(f'There was an error uploading your item: {err_msg}', category='danger')
+    
     return render_template('upload_page.html', upload_form=upload_form)
 
 @app.route("/myitems")
 @login_required
-def my_items():
+def items_page():
     my_items = Item.query.filter_by(owner=current_user.id)
-    return render_template('my_items.html', my_items=my_items)
+    return render_template('items_page.html', my_items=my_items)
 
 
 @app.errorhandler(404)

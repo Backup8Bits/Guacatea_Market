@@ -31,8 +31,11 @@ Profile Page
               </button>
             </div>
             {% if current_user.id == user.id %}
-              <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-rounded btn-lg" role="button">
+              <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-rounded btn-lg mb-1" role="button">
                 Sell Item
+              </a>
+              <a href="{{ url_for('items_page') }}" class="btn btn-success btn-rounded btn-lg mb-1" role="button">
+                My Items
               </a>
             {% else %}
               <button type="button" class="btn btn-primary btn-rounded btn-lg">
