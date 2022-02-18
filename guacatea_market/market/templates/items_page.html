@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Items
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #343a40!important;
+  }
+</style>
+<table class="table table-hover table-dark">
+  <thead>
+      <tr>
+          <!-- Your Columns HERE -->
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Date Posted</th>
+          <th scope="col">Price</th>
+          <th scope="col">Arrival Date</th>
+      </tr>
+  </thead>
+  <tbody>
+      <!-- Your rows inside the table HERE: -->
+      {% for item in my_items %}
+          <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.date_posted.strftime("%b %d %Y") }}</td>
+              <td>{{ item.price }}$</td>
+              <td>Mar 21 2022</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
