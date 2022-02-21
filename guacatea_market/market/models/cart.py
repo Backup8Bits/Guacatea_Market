@@ -8,6 +8,7 @@ carts_items = db.Table('carts_items',
             ) 
             
 class Cart(db.Model):
+    #FIXME: Error al borrar un item que pertenece o tenga relacion con la tabla 'cart_items'
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
     items = db.relationship('Item', secondary=carts_items, backref='carts') 
 

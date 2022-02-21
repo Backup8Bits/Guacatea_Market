@@ -12,7 +12,6 @@ class Item(db.Model):
         * description - description of the item 
         * image - path where the item image is stored 
         * date_posted - date & time that the item registered
-
     
     """
 
