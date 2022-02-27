@@ -43,7 +43,7 @@ services:
         image: adminer
         restart: always
         ports:
-            - 8080:8080
+            - 8888:8080
 
 volumes:
     postgres-db-volume:

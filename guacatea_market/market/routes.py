@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import flash, redirect, render_template, url_for, request
+from flask import flash, redirect, render_template, url_for, request, session
 
 from market import app
 from market import db
@@ -23,6 +23,9 @@ def home_page():
 def market_page():   
     purchase_form = PurchaseItemForm()
     cart_form = AddCartItemForm()
+    my_user = current_user.username
+    cart = session[my_user].get('cart')
+
     if request.method == "POST":
         if current_user.is_authenticated:
             # Proceso de compra
@@ -37,12 +40,13 @@ def market_page():
             # Proceso de agregar al carrito
             added_item = request.form.get('added_item')
             a_item_object = Item.query.filter_by(name=added_item).first()
-            cart = Cart.query.filter_by(userid=current_user.id).first()
+            # cart = Cart.query.filter_by(userid=current_user.id).first()
             if a_item_object:
-                if cart.can_add_item(a_item_object):
+                try:
+                    cart[a_item_object.id] = a_item_object.name
                     cart.add_item_to_cart(a_item_object)
                     flash(f'You added the item: {a_item_object.name} to your cart successfully', category='success')
-                else:
+                except Exception as e:
                     flash(f"You already have the item in your cart.", category='info')
             
 
@@ -70,9 +74,10 @@ def register_page():
             login_user(user_to_create)
             flash(f'Account created successfully! You are now logged in as {user_to_create.username}', category='success')
             # Cuando se crea un Usuario se crea un Carrito que tiene el id del Usuario esto lo hace único
-            cart_to_create = Cart(userid=user_to_create.id)
+            session[form.username.data] = { 'cart': [] }
+            """cart_to_create = Cart(userid=user_to_create.id)
             db.session.add(cart_to_create)
-            db.session.commit()
+            db.session.commit()"""
             return redirect(url_for('market_page'))
 
         if form.errors != {}: #If there are not errors from the validations
@@ -96,6 +101,8 @@ def login_page():
                                                     attempted_password=form.password.data):
                 login_user(user_to_verify)
                 flash(f'You are logging now! Welcome {user_to_verify.username}', category='success')
+                session[form.username.data] = { 'cart': [] } if session.get(form.username.data) is None else session.get(form.username.data)
+
                 return redirect(url_for('market_page'))
             else:
                 flash('Username and password are not match! Please try again', category='danger')
@@ -116,6 +123,10 @@ def cart_page():
     buy_items_form = BuyAllItemsForm()
     remove_form = RemoveCartItemForm()
     user_cart = Cart.query.filter_by(userid=current_user.id).first()
+    my_user = current_user.username
+    ids = session[my_user].get('cart', {})
+    items = db.session.query(Item).filter(Item.id.in_(ids)).all()
+    get_total_price = sum([item.price for item in items])
     if request.method == "POST":
         if current_user.is_authenticated:
             # Remover Artículos del carrito
@@ -142,7 +153,7 @@ def cart_page():
                 if current_user.can_buy_all(user_cart):
                     total_price = user_cart.get_total_price()
                     for item in user_cart.items:
-                        p_item_object = Item.query.filter_by(name=item.name).first()
+                        p_item_object = Item.query.filter_by(id=item.id).first()
                         current_user.buy(p_item_object)
                         user_cart.remove_item_from_cart(p_item_object)
                     flash(f"Congratulations! You purchased the entire cart for {total_price}$", category='success')
@@ -157,7 +168,8 @@ def cart_page():
         pass
         #TODO: Verificar porque siempre la pagina esta en modo post
     return render_template('mycart.html', user_cart=user_cart, remove_form=remove_form, 
-                            purchase_form=purchase_form, buy_items_form=buy_items_form)
+                            purchase_form=purchase_form, buy_items_form=buy_items_form,
+                            get_total_price=get_total_price, items=items)
 
 
 @app.route("/profile/<int:user_id>")
@@ -169,6 +181,8 @@ def profile_page(user_id):
 @app.route("/logout")
 @login_required
 def logout_page():
+    my_user = current_user.username
+    session.pop(my_user, None)
     logout_user()
     flash(f"You've been logged out now ", category='info')
     return redirect(url_for('home_page'))

@@ -5,7 +5,7 @@ from market.models import *
 carts_items = db.Table('carts_items',
             db.Column('cart.userid', db.Integer, db.ForeignKey('cart.userid')),
             db.Column('item.id', db.Integer, db.ForeignKey('item.id'))
-            ) 
+            )
             
 class Cart(db.Model):
     #FIXME: Error al borrar un item que pertenece o tenga relacion con la tabla 'cart_items'
