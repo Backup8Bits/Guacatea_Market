@@ -1,9 +1,8 @@
-# Aca estaran los formularios que haremos con flask_wtf y wtforms
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from wtforms import StringField, PasswordField, SubmitField
 from market.models.user import User
+from wtforms.validators import DataRequired, ValidationError, Email, Length, EqualTo
+
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25,
@@ -31,27 +30,3 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign in')
-
-class PurchaseItemForm(FlaskForm):
-    submit = SubmitField('Buy article') 
-
-class AddCartItemForm(FlaskForm):
-    submit = SubmitField('Add to Cart')
-
-class RemoveCartItemForm(FlaskForm):
-    submit = SubmitField('❌ Remove')
-
-class SellItemForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired()])
-    price = IntegerField('Price', validators=[DataRequired()])
-    image = FileField('Choose file', validators=[
-        
-        FileAllowed(['png', 'jpg','jpeg'], "Wrong format. Try again!")
-        ])
-    creator = StringField('Author')
-    submit = SubmitField('Upload')
-
-class BuyAllItemsForm(FlaskForm):
-    submit = SubmitField('Proceed to Checkout')
-    

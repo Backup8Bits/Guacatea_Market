@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
     cash = db.Column(db.Integer, nullable=False, default=200)
     items = db.relationship('Item', backref='owned_user', lazy=True, foreign_keys="[Item.owner]")
     artworks = db.relationship('Item', backref='author_user', lazy=True, foreign_keys="[Item.creator]")
-    cart = db.relationship('Cart', backref='user_id', uselist=False)
+
     
     def __repr__(self):
         return f'User: {self.username}'
@@ -57,7 +57,7 @@ class User(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
     
     """ 
-    Funciones para comprar solo 1 item 
+    Funciones para comprar items
     """
     def can_buy(self, item_obj):
         return self.cash >= item_obj.price
@@ -68,11 +68,6 @@ class User(db.Model, UserMixin):
         item_obj.author_user.cash += item_obj.price
         db.session.commit()
 
-    def can_buy_all(self, cart_obj):
-        return self.cash >= int(cart_obj.get_total_price())
-
-    # def buy(self, item_obj, u_to_pay):
-    #     item_obj.owner = self.id
-    #     self.cash -= item_obj.price
-    #     u_to_pay.cash += item_obj.price
-    #     db.session.commit()
+    def can_buy_all(self, total_price):
+        return self.cash >= int(total_price)
+    

@@ -1,7 +1,6 @@
 import pytest
 import datetime
 from market import app, db
-# from market import create_app, db
 from market.models.user import User
 from market.models.item import Item
 

@@ -62,8 +62,8 @@
                   <a class="nav-link" href="{{ url_for('cart_page') }}">
                     My Cart
                     <i class="fas fa-shopping-cart hidden"></i>
-                    {% if current_user.cart.items|length > 0 %}
-                      <span class="budget hidden" count="{{current_user.cart.items|length}}"></span>
+                    {% if cart_items|length > 0 %}
+                      <span class="budget hidden" count="{{cart_items|length}}"></span>
                     {% endif %}                                 
                   </a>
               </li>

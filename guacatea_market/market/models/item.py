@@ -23,8 +23,8 @@ class Item(db.Model):
     description = db.Column(db.String(1024), nullable=False)
     image = db.Column(db.String(100), nullable=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
-    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
-    creator = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'), default=None)
+    creator = db.Column(db.Integer, db.ForeignKey('user.id'), default=None) 
  
     def __repr__(self):
         return f'Item: {self.name}'
