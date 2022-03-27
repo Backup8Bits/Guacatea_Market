@@ -21,7 +21,7 @@
       <form method="POST">
         {{cart_form.hidden_tag()}}
         <div class="modal-footer">
-          <input id="added_item" name="added_item" type="hidden" value="{{item.name}}">
+          <input id="added_item" name="added_item" type="hidden" value="{{item.id}}">
           {{cart_form.submit(class="btn btn-primary")}}
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
@@ -72,7 +72,7 @@
       <form method="POST">
         {{purchase_form.hidden_tag()}}
         <div class="modal-footer">
-          <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">
+          <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.id}}">
           {{purchase_form.submit(class="btn btn-primary")}}
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
