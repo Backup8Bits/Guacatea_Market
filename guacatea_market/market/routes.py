@@ -6,7 +6,7 @@ from flask import flash, redirect, render_template, url_for, request, session
 from market import app
 from market import db
 
-from market.forms.market_form import BuyAllItemsForm, PurchaseItemForm, SellItemForm
+from market.forms.market_form import BuyAllItemsForm, PurchaseItemForm, SellItemForm, DeleteItemForm
 from market.forms.auth_form import LoginForm, RegisterForm
 from market.forms.cart_form import AddCartItemForm, RemoveCartItemForm
 
@@ -25,9 +25,11 @@ def home_page():
 def market_page():   
     purchase_form = PurchaseItemForm()
     cart_form = AddCartItemForm()
+    delete_form = DeleteItemForm()
     cart_items = []
 
     if not current_user.is_anonymous:
+        user_id = current_user.id
         my_user = current_user.username
         shopping_cart = session[my_user].get('cart')
         cart_items = db.session.query(Item).filter(Item.id.in_(shopping_cart)).all()
@@ -35,8 +37,8 @@ def market_page():
     if request.method == "POST":
         if current_user.is_authenticated:
             # Proceso de compra
-            purchased_item = request.form.get('purchased_item')
-            p_item_object = Item.query.filter_by(id=purchased_item).first()
+            purchased_item_id = request.form.get('purchased_item')
+            p_item_object = Item.query.filter_by(id=purchased_item_id).first()
             if p_item_object:
                 if current_user.can_buy(p_item_object):
                     current_user.buy(p_item_object)
@@ -44,15 +46,24 @@ def market_page():
                 else:
                     flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
             # Proceso de agregar al carrito
-            added_item = request.form.get('added_item')
-            a_item_object = Item.query.filter_by(id=added_item).first()
+            added_item_id = request.form.get('added_item')
+            a_item_object = Item.query.filter_by(id=added_item_id).first()
             if a_item_object:
                 try:
                     shopping_cart.append(a_item_object.id)
                     flash(f'You added the item: {a_item_object.name} to your cart successfully', category='success')
                 except Exception as e:
                     flash(f"You already have the item in your cart.", category='info')
-
+            # Proceso de eliminar articulos propios de la tienda
+            del_item_id = request.form.get('deleted_item')
+            d_item_object = Item.query.filter_by(id=del_item_id).first()
+            if d_item_object:
+                try:
+                    db.session.delete(d_item_object)
+                    db.session.commit()
+                    flash(f"You delete {d_item_object.name} successfully!", category='success')
+                except Exception as e:
+                    flash(f"We have issues with deleting...", category='warning')
 
             return redirect(url_for('market_page'))
         else:    
@@ -63,7 +74,9 @@ def market_page():
         items = Item.query.filter_by(owner=None)
         return render_template("market.html",items=items, 
         purchase_form=purchase_form, cart_form=cart_form,
-        cart_items=[item for item in cart_items])
+        cart_items=[item for item in cart_items],
+        user_id=None if current_user.is_anonymous else current_user.id,
+        delete_form=delete_form)
         
 
 @app.route('/register', methods=["GET", "POST"])
@@ -118,6 +131,17 @@ def login_page():
 
     flash(f"You are already logged in!", category='info')
     return redirect(url_for('market_page'))
+
+
+@app.route("/logout")
+@login_required
+def logout_page():
+    my_user = current_user.username
+    session.pop(my_user, None)
+    logout_user()
+    flash(f"You've been logged out now ", category='info')
+    return redirect(url_for('home_page'))
+
 
 @app.route("/mycart", methods=["GET", "POST"])
 @login_required
@@ -185,22 +209,6 @@ def cart_page():
                             purchase_form=purchase_form, buy_items_form=buy_items_form,
                             get_total_price=get_total_price, cart_items=[item for item in cart_items])
 
-
-@app.route("/profile/<int:user_id>")
-@login_required
-def profile_page(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    return render_template('profile.html', user=user)
-
-@app.route("/logout")
-@login_required
-def logout_page():
-    my_user = current_user.username
-    session.pop(my_user, None)
-    logout_user()
-    flash(f"You've been logged out now ", category='info')
-    return redirect(url_for('home_page'))
-
 @app.route("/upload", methods=['GET', 'POST'])
 @login_required
 def upload_page():
@@ -224,11 +232,20 @@ def upload_page():
     
     return render_template('upload_page.html', upload_form=upload_form)
 
+
+@app.route("/profile/<int:user_id>")
+@login_required
+def profile_page(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return render_template('profile.html', user=user)
+
+
 @app.route("/myitems")
 @login_required
 def items_page():
     my_items = Item.query.filter_by(owner=current_user.id)
     return render_template('items_page.html', my_items=my_items)
+
 
 @app.route("/terms")
 def terms():

@@ -5,6 +5,8 @@ from wtforms.validators import DataRequired
 
 class PurchaseItemForm(FlaskForm):
     submit = SubmitField('Buy article') 
+class DeleteItemForm(FlaskForm):
+    submit = SubmitField('Delete article') 
 
 class SellItemForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])

@@ -62,7 +62,11 @@
                   
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{item.id}}">View</button>
+                    {% if item.creator == user_id %}
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#Modal-DeleteConfirmation-{{item.id}}">Delete</button>
+                    {% else %}
                     <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#Modal-BuyConfirmation-{{item.id}}">Buy</button>
+                    {% endif %}
                   </div>
                   <!-- Fecha de publicacion -->
                   <small class="text-subtitle-light">{{item.date_posted.strftime("%b %d %Y")}}</small>

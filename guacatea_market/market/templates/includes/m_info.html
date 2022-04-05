@@ -64,7 +64,7 @@
             </p>
             <br>
             <p class="font-weight-bold">
-              Click down here if you wanna but it 👇
+              Click down here if you wanna buy it 👇
             </p>
           </div>
         </div>
@@ -74,6 +74,53 @@
         <div class="modal-footer">
           <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.id}}">
           {{purchase_form.submit(class="btn btn-primary")}}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal de eliminación de articulos -->
+<div class="modal fade" id="Modal-DeleteConfirmation-{{item.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title">{{item.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="bg-image hover-overlay ripple shadow-2-strong" data-mdb-ripple-color="light">
+              <img src="{{item.image}}" class="img-fluid" alt="Arte Digital">
+              <a href="#!">
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <p class= "font-weight-bold">
+              Are you wanna sure to delete this '{{item.name}}' from the market ?
+            </p>
+            
+            <p class="font-weight-bold">
+              Click down here if you wanna delete it 👇
+            </p>
+          </div>
+        </div>
+      </div>
+      <form method="POST">
+        {{delete_form.hidden_tag()}}
+        <div class="modal-footer">
+          <input id="deleted_item" name="deleted_item" type="hidden" value="{{item.id}}">
+          {{delete_form.submit(class="btn btn-primary")}}
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
