@@ -49,7 +49,7 @@ def create_app(test_config=None):
     
     if test_config is None:
         app.config.from_mapping(
-            SECRET_KEY="dfadc53023b12714ffe637bd2fad5fb3",
+            SECRET_KEY=os.environ.get("SECRET_KEY"),
             SQLALCHEMY_DATABASE_URI=os.environ.get("SQLALCHEMY_DATABASE_URI"),
             SQLALCHEMY_TRACK_MODIFICATIONS=False,
             UPLOAD_FOLDER=os.environ.get("UPLOAD_FOLDER")
@@ -59,7 +59,7 @@ def create_app(test_config=None):
     
     # Initialize Plugins   
     initialize_extensions(app)
-    register_blueprints(app)
+    from . import routes
     
     return app
 
@@ -73,15 +73,15 @@ def initialize_extensions(app):
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    # Flask-Login configuration
-    # from market.models.user import User
+    #Flask-Login configuration
+    from market.models.user import User
 
-    # @login_manager.user_loader
-    # def load_user(user_id):
-    #     return User.query.get(int(user_id))
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+ """
 
-
-def register_blueprints(app):
+""" def register_blueprints(app):
     # Since the application instance is now created, register each Blueprint
     # with the Flask application instance (app)
     from market.auth import auth

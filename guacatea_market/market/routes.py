@@ -6,7 +6,7 @@ from flask import flash, redirect, render_template, url_for, request, session
 from market import app
 from market import db
 
-from market.forms.market_form import BuyAllItemsForm, PurchaseItemForm, SellItemForm
+from market.forms.market_form import BuyAllItemsForm, PurchaseItemForm, SellItemForm, DeleteItemForm
 from market.forms.auth_form import LoginForm, RegisterForm
 from market.forms.cart_form import AddCartItemForm, RemoveCartItemForm
 
@@ -25,15 +25,20 @@ def home_page():
 def market_page():   
     purchase_form = PurchaseItemForm()
     cart_form = AddCartItemForm()
+    delete_form = DeleteItemForm()
+    cart_items = []
+
     if not current_user.is_anonymous:
+        user_id = current_user.id
         my_user = current_user.username
         shopping_cart = session[my_user].get('cart')
+        cart_items = db.session.query(Item).filter(Item.id.in_(shopping_cart)).all()
 
     if request.method == "POST":
         if current_user.is_authenticated:
             # Proceso de compra
-            purchased_item = request.form.get('purchased_item')
-            p_item_object = Item.query.filter_by(name=purchased_item).first()
+            purchased_item_id = request.form.get('purchased_item')
+            p_item_object = Item.query.filter_by(id=purchased_item_id).first()
             if p_item_object:
                 if current_user.can_buy(p_item_object):
                     current_user.buy(p_item_object)
@@ -41,15 +46,24 @@ def market_page():
                 else:
                     flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
             # Proceso de agregar al carrito
-            added_item = request.form.get('added_item')
-            a_item_object = Item.query.filter_by(name=added_item).first()
+            added_item_id = request.form.get('added_item')
+            a_item_object = Item.query.filter_by(id=added_item_id).first()
             if a_item_object:
                 try:
                     shopping_cart.append(a_item_object.id)
                     flash(f'You added the item: {a_item_object.name} to your cart successfully', category='success')
                 except Exception as e:
                     flash(f"You already have the item in your cart.", category='info')
-
+            # Proceso de eliminar articulos propios de la tienda
+            del_item_id = request.form.get('deleted_item')
+            d_item_object = Item.query.filter_by(id=del_item_id).first()
+            if d_item_object:
+                try:
+                    db.session.delete(d_item_object)
+                    db.session.commit()
+                    flash(f"You delete {d_item_object.name} successfully!", category='success')
+                except Exception as e:
+                    flash(f"We have issues with deleting...", category='warning')
 
             return redirect(url_for('market_page'))
         else:    
@@ -58,7 +72,11 @@ def market_page():
 
     if request.method == "GET":
         items = Item.query.filter_by(owner=None)
-        return render_template("market.html",items=items, purchase_form=purchase_form, cart_form=cart_form)
+        return render_template("market.html",items=items, 
+        purchase_form=purchase_form, cart_form=cart_form,
+        cart_items=[item for item in cart_items],
+        user_id=None if current_user.is_anonymous else current_user.id,
+        delete_form=delete_form)
         
 
 @app.route('/register', methods=["GET", "POST"])
@@ -114,6 +132,17 @@ def login_page():
     flash(f"You are already logged in!", category='info')
     return redirect(url_for('market_page'))
 
+
+@app.route("/logout")
+@login_required
+def logout_page():
+    my_user = current_user.username
+    session.pop(my_user, None)
+    logout_user()
+    flash(f"You've been logged out now ", category='info')
+    return redirect(url_for('home_page'))
+
+
 @app.route("/mycart", methods=["GET", "POST"])
 @login_required
 def cart_page():
@@ -127,22 +156,23 @@ def cart_page():
     cart_items = db.session.query(Item).filter(Item.id.in_(shopping_cart)).all()
     get_total_price = sum([item.price for item in cart_items])
     session.modified = True
-    # TODO: Poner el metodo get y poner el proceso en otra vista
+    
     if request.method == "POST":
         if current_user.is_authenticated:
             # Remover Artículos del carrito
             removed_item = request.form.get('removed_item')
-            r_item_object = Item.query.filter_by(name=removed_item).first()
+            r_item_object = Item.query.filter_by(id=removed_item).first()
             if r_item_object:
                 try:
-                    shopping_cart.remove(r_item_object.id) 
+                    shopping_cart.remove(r_item_object.id)  
+                    
                 except ValueError:
-                    flash(f"The item was removed successfully", category='info')
+                    flash(f"The item has already been removed from the cart", category='info')
                 flash(f"The item '{r_item_object.name}' was removed successfully from your cart", category='success')
             
             # Proceso de compra de UN artículo
             purchased_item = request.form.get('purchased_item')
-            p_item_object = Item.query.filter_by(name=purchased_item).first()
+            p_item_object = Item.query.filter_by(id=purchased_item).first()
             if p_item_object:
                 if current_user.can_buy(p_item_object):
                     current_user.buy(p_item_object)
@@ -157,7 +187,7 @@ def cart_page():
             #Proceso de compra de TODOS los artículos del carrito
             buy_confirmation = request.form.get('buy_confirmation')
             if buy_confirmation:
-                if current_user.can_buy_all(get_total_price):
+                if current_user.can_buy_all(get_total_price):  
                     for item in cart_items:
                         p_item_object = Item.query.filter_by(id=item.id).first()
                         current_user.buy(p_item_object)
@@ -169,32 +199,15 @@ def cart_page():
                     flash(f"Congratulations! You purchased the entire cart for {get_total_price}$", category='success')
                 else:
                     flash(f"Unfortunately, you don't have enough money to purchase the entire cart", category='danger')         
-       
+            return redirect(url_for('cart_page'))
         else:    
             flash(f"You need to create a account or login to the page for saved any item in a cart", category='danger')
             return redirect(url_for('market_page'))
-
-    if request.method == "GET":        
-        pass
-    return render_template('mycart.html', remove_form=remove_form, 
+    if request.method == "GET":
+        
+        return render_template('mycart.html', remove_form=remove_form, 
                             purchase_form=purchase_form, buy_items_form=buy_items_form,
                             get_total_price=get_total_price, cart_items=[item for item in cart_items])
-
-
-@app.route("/profile/<int:user_id>")
-@login_required
-def profile_page(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    return render_template('profile.html', user=user)
-
-@app.route("/logout")
-@login_required
-def logout_page():
-    my_user = current_user.username
-    session.pop(my_user, None)
-    logout_user()
-    flash(f"You've been logged out now ", category='info')
-    return redirect(url_for('home_page'))
 
 @app.route("/upload", methods=['GET', 'POST'])
 @login_required
@@ -219,12 +232,24 @@ def upload_page():
     
     return render_template('upload_page.html', upload_form=upload_form)
 
+
+@app.route("/profile/<int:user_id>")
+@login_required
+def profile_page(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return render_template('profile.html', user=user)
+
+
 @app.route("/myitems")
 @login_required
 def items_page():
     my_items = Item.query.filter_by(owner=current_user.id)
     return render_template('items_page.html', my_items=my_items)
 
+
+@app.route("/terms")
+def terms():
+    return render_template('terms&conditions.html')
 
 @app.errorhandler(404)
 def not_found(e):
