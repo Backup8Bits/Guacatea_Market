@@ -1,8 +1,8 @@
 import pytest
 import datetime
-from market import app, db
-from market.models.user import User
-from market.models.item import Item
+from web.market import app, db
+from web.market.models.user import User
+from web.market.models.item import Item
 
 @pytest.fixture(scope='module')
 def new_user():

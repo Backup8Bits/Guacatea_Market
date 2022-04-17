@@ -1,7 +1,7 @@
 """
 This file (test_models.py) contains the unit tests for the models.py file.
 """
-from market.models.user import User
+from web.market.models.user import User
 import datetime
 
 def test_new_user(new_user):
