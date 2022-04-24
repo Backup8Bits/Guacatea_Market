@@ -46,12 +46,12 @@ Profile Page
                       </div>
                       <form method="POST">
                         {{purchase_form.hidden_tag()}}
-                        <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.name}}">
+                        <input id="purchased_item" name="purchased_item" type="hidden" value="{{item.id}}">
                         {{purchase_form.submit(class="btn btn-outline-secondary btn-sm btn-block mb-2", value="✔️ Just buy this")}}
                       </form>
                       <form method="POST">
                         {{remove_form.hidden_tag()}}
-                        <input id="removed_item" name="removed_item" type="hidden" value="{{item.name}}">
+                        <input id="removed_item" name="removed_item" type="hidden" value="{{item.id}}">
                         {{remove_form.submit(class="btn btn-outline-danger btn-sm btn-block mb-2")}}
                       </form>
                   </div>
