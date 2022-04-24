@@ -3,7 +3,6 @@ import secrets
 
 from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-from market import app, db
 from market.forms.auth_form import LoginForm, RegisterForm
 from market.forms.cart_form import AddCartItemForm, RemoveCartItemForm
 from market.forms.market_form import (BuyAllItemsForm, PurchaseItemForm,
@@ -11,6 +10,8 @@ from market.forms.market_form import (BuyAllItemsForm, PurchaseItemForm,
 from market.models.item import Item
 from market.models.user import User
 from PIL import Image
+
+from market import app, db
 
 
 @app.route('/')

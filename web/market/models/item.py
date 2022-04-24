@@ -1,7 +1,8 @@
 import datetime
 
-from market import db
 from market.models import *
+
+from market import db
 
 
 class Item(db.Model):
