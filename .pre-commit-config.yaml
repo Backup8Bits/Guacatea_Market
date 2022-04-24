@@ -1,3 +1,4 @@
+# Before "pre-commit install"
 # Just run "pre-commit run --all-files" for execute these hooks
 
 repos:
