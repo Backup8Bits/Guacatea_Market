@@ -1,14 +1,16 @@
-import pytest
 import datetime
-from market import app, db
-from market.models.user import User
-from market.models.item import Item
+
+import pytest
+from web.market import app, db
+from web.market.models.item import Item
+from web.market.models.user import User
+
 
 @pytest.fixture(scope='module')
 def new_user():
     user = User(username='FlaskUser',
                 email='patkennedy79@gmail.com',
-                password='KennedyRules')   
+                password='KennedyRules')
     return user
 
 @pytest.fixture(scope='module')
@@ -17,7 +19,7 @@ def new_item():
                 price=100,
                 description='Item Description',
                 path_format='/opt/app/market/static/uploads/e57399e1133330ap.png',
-                date_format= datetime.datetime.now()   
+                date_format= datetime.datetime.now()
                )
     return item
 
@@ -42,7 +44,7 @@ def new_item():
 #     user1 = User(username='FlaskUser',
 #                 email='patkennedy79@gmail.com',
 #                 password='KennedyRules')
-                
+
 #     user2 = User(username='SecondUser',
 #                 email='something12@gmail.com',
 #                 password='PaSsWoRd')

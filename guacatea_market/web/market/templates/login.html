@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login Page
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="/static/css/login.css">
+{% endblock %}
+
+{% block content %}
+<body>
+  <div class="container">
+
+    <div class="card bg-light">
+      <article class="card-body mx-auto py-0" >
+        <h4 class="card-title mt-3 text-center font-weight-bold">Login</h4>
+        <p class="text-center mb-0 font-weight-bold">Welcome back! Sign in to your account</p>
+        <img class="rounded mx-auto d-block" src="/static/img/page_imgs/avocado_mini.png" alt="Animated Avocado">
+
+        <form class="mt-2" method="post">
+          {{ form.hidden_tag() }}
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            {{ form.username(class="form-control", placeholder="Username") }}
+          </div> <!-- form-group// -->
+
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            {{ form.password(class="form-control", placeholder="Password") }}
+          </div> <!-- form-group// -->
+
+          <div class="form-group">
+            {{ form.submit(class="btn btn-primary btn-block")}}
+
+          </div> <!-- form-group// -->
+
+          <p class="text-center">Don't have an account? <a href="{{ url_for('register_page') }}">Sign Up</a> </p>
+        </form>
+      </article>
+    </div>
+  </div>
+</body>
+{% endblock %}

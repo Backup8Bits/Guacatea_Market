@@ -1,0 +1,70 @@
+# Just run "pre-commit run --all-files" for execute these hooks
+
+repos:
+# pre-commit-hooks
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+
+# black
+-   repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+    -   id: black
+        args:
+            [
+              --line-length=102,
+              --diff,
+              --exclude="""\.git |
+              \.__pycache__|
+              \.hg|
+              \.mypy_cache|
+              \.tox|
+              \.venv|
+              _build|
+              buck-out|
+              build|
+              dist"""
+            ]
+
+# flake8
+# Use # noqa for ignore warnings in that line
+-   repo: https://github.com/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear
+        args:
+            [
+              --max-line-length=102,
+              --select=C,E,F,W,B,B950,
+              --ignore = E203, E501
+            ]
+
+# isort
+-   repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+
+# pyupgrade
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v2.32.0
+    hooks:
+    -   id: pyupgrade
+
+# # pytest
+# -   repo: local
+#     hooks:
+#     - id: pytest
+#       name: pytest
+#       stages: [commit]
+#       types: [python]
+#       entry: pytest
+#       language: system
+#       pass_filenames: false
+#       always_run: true

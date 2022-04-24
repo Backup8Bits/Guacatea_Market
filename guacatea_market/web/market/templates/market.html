@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Market Page
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="/static/css/market.css">
+{% endblock %}
+
+{% block content %}
+<main role="main">
+  {% if current_user.is_authenticated %}
+    <section class="jumbotron text-center" style="background-image:url('/static/img/page_imgs/market_logo3.jpg')">
+      <div class="container">
+        <h1 class="display-3 my-5" style="font-family: fantasy; color: #29271e;">Guacatea Market</h1>
+      </div>
+    </section>
+  {% else %}
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Guacatea Market</h1>
+        <p class="lead">
+          Welcome to our market, here you can offer and buy the best independent digital art that exists on the internet.
+          To be able to access a better user experience, log in or create an account. This way you will unlock new features.
+        </p>
+        <p>
+          <a href="{{ url_for('login_page') }}" class="btn btn-primary my-2">Login</a>
+          <a href="{{ url_for('register_page') }}" class="btn btn-success my-2">Sign up</a>
+        </p>
+      </div>
+    </section>
+  {% endif %}
+  <div class="album py-5 bg-dark px-4">
+    <div class="container-fluid px-0">
+      <div class="row">
+        {% for item in items %}
+        {% include "includes/m_info.html" %}
+          <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <div class="card mb-4 box-shadow">
+              <!-- Imagen del articulo 346x225-->
+              <!-- Tengo que cortar la ruta hasta la parte static         -->
+              <img class="card-img-top" src={{item.image}} alt="Image of an item from market place">
+
+              <div class="card-body">
+                <!-- Nombre del articulo -->
+                <h5 class="card-title">{{item.name}}</h5>
+                <!-- Precio del articulo -->
+                <h6 class="card-subtitle mb-2 text-subtitle-light">Precio: {{item.price}}$</h6>
+                <!-- Descripcion del articulo -->
+                <p class="card-text">
+                  {{item.description}}
+                </p>
+                <p class="text-right">
+                  {% if item.author_user.id %}
+                    <a href="{{ url_for('profile_page', user_id=item.author_user.id) }}" class="colored-link-card">{{item.author_user.username}}</a>
+                  {% else %}
+                    <a href="#1" class="colored-link-card disabled" aria-disabled="true">Anonymous</a>
+                  {% endif %}
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{item.id}}">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#Modal-BuyConfirmation-{{item.id}}">Buy</button>
+                  </div>
+                  <!-- Fecha de publicacion -->
+                  <small class="text-subtitle-light">{{item.date_posted.strftime("%b %d %Y")}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!-- Footer -->
+<footer class="page-footer font-small indigo">
+
+  <!-- Footer Links -->
+  <div class="container">
+
+    <!-- Grid row-->
+    <div class="row text-center d-flex justify-content-center pt-5 mb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#1" class="text-light">About us</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#1" class="text-light">Products</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#1" class="text-light">Donate</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#1" class="text-light">Contact</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#1" class="text-light">Help</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+    <hr class="rgba-white-light" style="margin: 0 15%;">
+
+    <!-- Grid row-->
+    <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
+
+      <!-- Grid column -->
+      <div class="col-md-8 col-12 mt-5">
+        <!-- Informacion del footer -->
+        <p style="line-height: 1.7rem">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem
+          aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+          explicabo.
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
+        </p>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+    <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
+
+    <!-- Grid row-->
+    <div class="row pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-12">
+
+        <div class="h-100 mb-5 d-flex justify-content-center align-items-center">
+
+          <!-- Facebook -->
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic">
+            <i class="fab fa-twitter fa-lg white-text mr-4"> </i>
+          </a>
+          <!-- Google +-->
+          <a class="gplus-ic">
+            <i class="fab fa-google-plus-g fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Linkedin -->
+          <a class="li-ic">
+            <i class="fab fa-linkedin-in fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Instagram-->
+          <a class="ins-ic">
+            <i class="fab fa-instagram fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Pinterest-->
+          <a class="pin-ic">
+            <i class="fab fa-pinterest fa-lg white-text"> </i>
+          </a>
+
+        </div>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+
+  </div>
+  <!-- Footer Links -->
+
+</footer>
+<!-- Footer -->
+
+{% endblock %}

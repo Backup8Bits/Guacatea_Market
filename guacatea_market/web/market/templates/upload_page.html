@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Upload Page
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+{% block content %}
+<style>
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+</style>
+
+<div class="container">
+
+  <div class="card bg-light">
+    <article class="card-body mx-auto py-0" >
+      <h4 class="card-title mt-3 text-center font-weight-bold">Upload Items</h4>
+      <p class="text-center mb-0 font-weight-bold mb-3">Welcome back! Sell your items and get money!</p>
+      <img class="rounded mx-auto d-block mb-3" src="/static/img/page_imgs/avocado_uploadpage.png" alt="Animated Avocado">
+
+      <form class="mt-2" method="post" enctype="multipart/form-data">
+        {{ upload_form.hidden_tag() }}
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-file-signature"></i> </span>
+          </div>
+          {{ upload_form.name(class="form-control", placeholder="Item Name") }}
+        </div> <!-- form-group// -->
+
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-money-bill"></i> </span>
+          </div>
+          {{ upload_form.price(class="form-control", placeholder="Price", max="1000000") }}
+        </div> <!-- form-group// -->
+
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-pen"></i> </span>
+          </div>
+          {{ upload_form.description(class="form-control", placeholder="Description") }}
+        </div> <!-- form-group// -->
+
+        <div class="form-group input-group">
+          <div class="input-group">
+            {{ upload_form.image(class="form-control-file") }}
+          </div>
+        </div> <!-- form-group// -->
+
+        <div class="form-group">
+          {{ upload_form.submit(class="btn btn-primary btn-block")}}
+        </div> <!-- form-group// -->
+
+
+      </form>
+    </article>
+  </div>
+</div>
+{% endblock %}
