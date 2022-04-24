@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
 from market.models.user import User
-from wtforms.validators import DataRequired, ValidationError, Email, Length, EqualTo
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import (DataRequired, Email, EqualTo, Length,
+                                ValidationError)
 
 
 class RegisterForm(FlaskForm):
@@ -20,7 +21,7 @@ class RegisterForm(FlaskForm):
         # Si user es True entonces hay un usuario con ese nombre registrado
         if user:
             raise ValidationError('That username already exists. Try another one please')
-    
+
     def validate_email(self, email_to_verify):
         email = User.query.filter_by(email=email_to_verify.data).first()
         if email:

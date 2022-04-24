@@ -12,13 +12,13 @@
 <main role="main">
   {% if current_user.is_authenticated %}
     <section class="jumbotron text-center" style="background-image:url('/static/img/page_imgs/market_logo3.jpg')">
-      <div class="container">      
+      <div class="container">
         <h1 class="display-3 my-5" style="font-family: fantasy; color: #29271e;">Guacatea Market</h1>
       </div>
     </section>
   {% else %}
     <section class="jumbotron text-center">
-      <div class="container">      
+      <div class="container">
         <h1 class="jumbotron-heading">Guacatea Market</h1>
         <p class="lead">
           Welcome to our market, here you can offer and buy the best independent digital art that exists on the internet.
@@ -46,7 +46,7 @@
                 <!-- Nombre del articulo -->
                 <h5 class="card-title">{{item.name}}</h5>
                 <!-- Precio del articulo -->
-                <h6 class="card-subtitle mb-2 text-subtitle-light">Precio: {{item.price}}$</h6> 
+                <h6 class="card-subtitle mb-2 text-subtitle-light">Precio: {{item.price}}$</h6>
                 <!-- Descripcion del articulo -->
                 <p class="card-text">
                   {{item.description}}
@@ -59,7 +59,7 @@
                   {% endif %}
                 </p>
                 <div class="d-flex justify-content-between align-items-center">
-                  
+
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{item.id}}">View</button>
                     <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#Modal-BuyConfirmation-{{item.id}}">Buy</button>
@@ -69,7 +69,7 @@
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
         {% endfor %}
 
       </div>
@@ -199,4 +199,3 @@
 <!-- Footer -->
 
 {% endblock %}
-

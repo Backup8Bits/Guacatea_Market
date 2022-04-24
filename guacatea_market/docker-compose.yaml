@@ -18,7 +18,7 @@ services:
             POSTGRES_DB: market
         volumes:
             - postgres-db-volume:/var/lib/postgresql/data
-            
+
     app:
         build: web
         restart: always
@@ -34,7 +34,7 @@ services:
             - FLASK_APP=run.py
         networks:
             - flask-network
-    
+
 
     adminer:
         image: adminer

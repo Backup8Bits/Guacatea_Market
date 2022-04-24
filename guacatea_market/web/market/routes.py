@@ -1,18 +1,16 @@
 import os
 import secrets
-from PIL import Image
-from flask import flash, redirect, render_template, url_for, request, session
 
-from market import app
-from market import db
-
-from market.forms.market_form import BuyAllItemsForm, PurchaseItemForm, SellItemForm
+from flask import flash, redirect, render_template, request, session, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from market import app, db
 from market.forms.auth_form import LoginForm, RegisterForm
 from market.forms.cart_form import AddCartItemForm, RemoveCartItemForm
-
-from market.models.user import User
+from market.forms.market_form import (BuyAllItemsForm, PurchaseItemForm,
+                                      SellItemForm)
 from market.models.item import Item
-from flask_login import login_user, logout_user, login_required, current_user
+from market.models.user import User
+from PIL import Image
 
 
 @app.route('/')
@@ -22,7 +20,7 @@ def home_page():
 
 
 @app.route('/market', methods=["GET", "POST"])
-def market_page():   
+def market_page():
     purchase_form = PurchaseItemForm()
     cart_form = AddCartItemForm()
     if not current_user.is_anonymous:
@@ -52,14 +50,14 @@ def market_page():
 
 
             return redirect(url_for('market_page'))
-        else:    
+        else:
             flash(f"You need to create a account or login to the page for buy any item", category='danger')
             return redirect(url_for('market_page'))
 
     if request.method == "GET":
         items = Item.query.filter_by(owner=None)
         return render_template("market.html",items=items, purchase_form=purchase_form, cart_form=cart_form)
-        
+
 
 @app.route('/register', methods=["GET", "POST"])
 def register_page():
@@ -104,7 +102,7 @@ def login_page():
                 return redirect(url_for('market_page'))
             else:
                 flash('Username and password are not match! Please try again', category='danger')
-            
+
         if form.errors != {}: #If there are not errors from the validations
             for err_msg in form.errors.values():
                 flash(f'There was an error with creating a user: {err_msg}', category='danger')
@@ -125,7 +123,7 @@ def cart_page():
     my_user = current_user.username
     shopping_cart = session[my_user].get('cart', [])
     cart_items = db.session.query(Item).filter(Item.id.in_(shopping_cart)).all()
-    get_total_price = sum([item.price for item in cart_items])
+    get_total_price = sum(item.price for item in cart_items)
     session.modified = True
     # TODO: Poner el metodo get y poner el proceso en otra vista
     if request.method == "POST":
@@ -135,11 +133,11 @@ def cart_page():
             r_item_object = Item.query.filter_by(name=removed_item).first()
             if r_item_object:
                 try:
-                    shopping_cart.remove(r_item_object.id) 
+                    shopping_cart.remove(r_item_object.id)
                 except ValueError:
                     flash(f"The item was removed successfully", category='info')
                 flash(f"The item '{r_item_object.name}' was removed successfully from your cart", category='success')
-            
+
             # Proceso de compra de UN artículo
             purchased_item = request.form.get('purchased_item')
             p_item_object = Item.query.filter_by(name=purchased_item).first()
@@ -153,7 +151,7 @@ def cart_page():
                     flash(f"Congratulations! You purchased the '{p_item_object.name}' for {p_item_object.price}$", category='success')
                 else:
                     flash(f"Unfortunately, you don't have enough money to purchase the '{p_item_object.name}'", category='danger')
-            
+
             #Proceso de compra de TODOS los artículos del carrito
             buy_confirmation = request.form.get('buy_confirmation')
             if buy_confirmation:
@@ -168,15 +166,15 @@ def cart_page():
 
                     flash(f"Congratulations! You purchased the entire cart for {get_total_price}$", category='success')
                 else:
-                    flash(f"Unfortunately, you don't have enough money to purchase the entire cart", category='danger')         
-       
-        else:    
+                    flash(f"Unfortunately, you don't have enough money to purchase the entire cart", category='danger')
+
+        else:
             flash(f"You need to create a account or login to the page for saved any item in a cart", category='danger')
             return redirect(url_for('market_page'))
 
-    if request.method == "GET":        
+    if request.method == "GET":
         pass
-    return render_template('mycart.html', remove_form=remove_form, 
+    return render_template('mycart.html', remove_form=remove_form,
                             purchase_form=purchase_form, buy_items_form=buy_items_form,
                             get_total_price=get_total_price, cart_items=[item for item in cart_items])
 
@@ -216,7 +214,7 @@ def upload_page():
     if upload_form.errors != {}: #If there are not errors from the validations
         for err_msg in upload_form.errors.items():
             flash(f'There was an error uploading your item: {err_msg}', category='danger')
-    
+
     return render_template('upload_page.html', upload_form=upload_form)
 
 @app.route("/myitems")

@@ -1,8 +1,7 @@
-from market import db
-from market import bcrypt
-from market import login_manager
 from flask_login import UserMixin
+from market import bcrypt, db, login_manager
 from market.models import *
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -32,10 +31,10 @@ class User(db.Model, UserMixin):
     items = db.relationship('Item', backref='owned_user', lazy=True, foreign_keys="[Item.owner]")
     artworks = db.relationship('Item', backref='author_user', lazy=True, foreign_keys="[Item.creator]")
 
-    
+
     def __repr__(self):
         return f'User: {self.username}'
-    
+
     @property
     def prettier_cash(self):
         if len(str(self.cash)) >= 4:
@@ -46,7 +45,7 @@ class User(db.Model, UserMixin):
     @property
     def password(self):
         return self.password
-    
+
 
     @password.setter
     def password(self, plain_text_password):
@@ -55,13 +54,13 @@ class User(db.Model, UserMixin):
 
     def check_password(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
-    
-    """ 
+
+    """
     Funciones para comprar items
     """
     def can_buy(self, item_obj):
         return self.cash >= item_obj.price
-    
+
     def buy(self, item_obj):
         item_obj.owner = self.id
         self.cash -= item_obj.price
@@ -70,4 +69,3 @@ class User(db.Model, UserMixin):
 
     def can_buy_all(self, total_price):
         return self.cash >= int(total_price)
-    

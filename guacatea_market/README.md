@@ -4,12 +4,12 @@
 <p>
   Es un E-Comerce robusto construído con Flask, Postgresql y SQLAlchemy.<br>
   Donde podra comprar y vender arte digital de artistas independientes.
-  
+
 </p>
 
-## 📂 Link para Clonar Repositorio  
-```  
-git clone https://github.com/Fer-Bar/Guacatea_Market.git  
+## 📂 Link para Clonar Repositorio
+```
+git clone https://github.com/Fer-Bar/Guacatea_Market.git
 ```
 
 ## Instrucciones de uso
@@ -23,7 +23,7 @@ python -m pytest -v
 
 ```
 
-## 🏆 Integrantes 
+## 🏆 Integrantes
 - Lino Fernando Barrientos Cárdenas
 - Neimv Zephon Zatara Lyra
 - Magno Martinez

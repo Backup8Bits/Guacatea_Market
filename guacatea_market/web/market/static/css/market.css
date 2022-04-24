@@ -58,8 +58,8 @@ a:hover {
   color: #fff;
 }
 
-.box-shadow { 
-  box-shadow: 0.25rem .75rem rgba(0, 0, 0, .05); 
+.box-shadow {
+  box-shadow: 0.25rem .75rem rgba(0, 0, 0, .05);
 }
 
 .card {
@@ -91,14 +91,14 @@ img.card-img-top {
   text-decoration: none;
 }
 
-a { 
+a {
   color: #fff;
 }
 
 .text-subtitle-light {
   color: #90c3f7!important;
 }
- 
+
 .colored-link-card {
   color: #28a745!important;
 }

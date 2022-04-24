@@ -1,6 +1,7 @@
-from market import app
 import os
+
 from dotenv import load_dotenv
+from market import app
 
 load_dotenv()
 # Run this command to run the application in DEBUG mode.

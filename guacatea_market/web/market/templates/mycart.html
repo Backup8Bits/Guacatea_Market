@@ -30,10 +30,10 @@ Profile Page
                   <div class="media d-block d-sm-flex text-center text-sm-left">
                       <a class="cart-item-thumb mx-auto mr-sm-4" href="{{item.image}}" target="_blank"><img src="{{item.image}}" alt="Product"></a>
                       <div class="media-body pt-3">
-                          <h3 class="product-card-title font-weight-semibold border-0 pb-0"><a href="#1" class="disabled" aria-disabled="true">{{item.name}}</a></h3>                          
+                          <h3 class="product-card-title font-weight-semibold border-0 pb-0"><a href="#1" class="disabled" aria-disabled="true">{{item.name}}</a></h3>
                           <div class="font-size-sm">
                             <span class="text-muted mr-2">Author:</span>
-                            <span>{{item.author_user.username}}</span>                            
+                            <span>{{item.author_user.username}}</span>
                           </div>
                           <div class="font-size-sm"><span class="text-muted mr-2">Quantity:</span>1</div>
                           <div class="font-size-lg text-primary pt-2">${{item.price}}</div>
@@ -55,7 +55,7 @@ Profile Page
                         {{remove_form.submit(class="btn btn-outline-danger btn-sm btn-block mb-2")}}
                       </form>
                   </div>
-              </div>  
+              </div>
             {% endfor %}
         </div>
         <!-- Sidebar-->
@@ -69,7 +69,7 @@ Profile Page
               {{buy_items_form.hidden_tag()}}
               <input id="buy_confirmation" name="buy_confirmation" type="hidden" value="True">
               {{buy_items_form.submit(class="btn btn-primary btn-block")}}
-        
+
             </form>
             <div class="pt-4">
                 <div class="accordion" id="cart-accordion">
@@ -159,4 +159,3 @@ Profile Page
 {% endif %}
 
 {% endblock %}
-

@@ -1,5 +1,6 @@
 from market import app, db
 
+
 @app.cli.command("create_db")
 def create_db():
     db.create_all()

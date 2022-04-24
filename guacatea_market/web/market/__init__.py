@@ -1,11 +1,12 @@
 import os
+
 from dotenv import load_dotenv
 from flask import Flask
 from flask_bcrypt import Bcrypt
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from .config import DEV_DB, PROD_DB
+from flask_sqlalchemy import SQLAlchemy
 
+from .config import DEV_DB, PROD_DB
 
 load_dotenv()
 
@@ -30,8 +31,7 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'jpeg', 'jpg', 'png'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-from market import routes
-from market import commands
+from . import commands, routes
 
 """ #######################
 #### Configuration ####
@@ -47,12 +47,12 @@ login_manager = LoginManager()
 login_manager.login_view = 'login_page'
 login_manager.login_message_category = 'info'
 login_manager.login_message = 'Please login to the page if you want to access'
-ALLOWED_EXTENSIONS = {'jpeg', 'jpg', 'png'}    
+ALLOWED_EXTENSIONS = {'jpeg', 'jpg', 'png'}
 
 def create_app(test_config=None):
 
     app = Flask(__name__, static_url_path='/static')
-    
+
     if test_config is None:
         app.config.from_mapping(
             SECRET_KEY="dfadc53023b12714ffe637bd2fad5fb3",
@@ -62,11 +62,11 @@ def create_app(test_config=None):
         )
     else:
         app.config.from_mapping(test_config)
-    
-    # Initialize Plugins   
+
+    # Initialize Plugins
     initialize_extensions(app)
     register_blueprints(app)
-    
+
     return app
 
 ##########################

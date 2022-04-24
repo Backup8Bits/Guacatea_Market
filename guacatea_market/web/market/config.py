@@ -1,4 +1,4 @@
-import os 
+import os
 
 DEV_DB='sqlite:///market.db'
 

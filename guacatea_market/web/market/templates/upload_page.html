@@ -9,12 +9,12 @@ Upload Page
 {% endblock %}
 {% block content %}
 <style>
-  input[type=number]::-webkit-inner-spin-button, 
-  input[type=number]::-webkit-outer-spin-button { 
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
 </style>
 
@@ -48,18 +48,18 @@ Upload Page
           </div>
           {{ upload_form.description(class="form-control", placeholder="Description") }}
         </div> <!-- form-group// -->
-        
+
         <div class="form-group input-group">
           <div class="input-group">
-            {{ upload_form.image(class="form-control-file") }}            
+            {{ upload_form.image(class="form-control-file") }}
           </div>
         </div> <!-- form-group// -->
 
         <div class="form-group">
           {{ upload_form.submit(class="btn btn-primary btn-block")}}
         </div> <!-- form-group// -->
-        
-        
+
+
       </form>
     </article>
   </div>
