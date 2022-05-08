@@ -1,5 +1,8 @@
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
 DEV_DB='sqlite:///market.db'
 
 pg_user= os.environ.get('POSTGRES_USER')

@@ -1,8 +1,7 @@
 import datetime
 
-from market.models import *
-
 from market import db
+from market.models import *
 
 
 class Item(db.Model):
@@ -46,4 +45,4 @@ class Item(db.Model):
 
     @path_format.setter
     def path_format(self, path_absolute):
-        self.image = '/' + '/'.join(path_absolute.split('/')[4:])
+        self.image = '/' + '/'.join(path_absolute.split('/')[3:])

@@ -1,7 +1,6 @@
 from flask_login import UserMixin
-from market.models import *
-
 from market import bcrypt, db, login_manager
+from market.models import *
 
 
 @login_manager.user_loader

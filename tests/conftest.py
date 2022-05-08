@@ -2,6 +2,7 @@ import datetime
 
 import pytest
 
+from web.market import app, db
 from web.market.models.item import Item
 from web.market.models.user import User
 
@@ -18,7 +19,7 @@ def new_item():
     item = Item(name='NewItem',
                 price=100,
                 description='Item Description',
-                path_format='/opt/app/market/static/uploads/e57399e1133330ap.png',
+                path_format='/static/uploads/e57399e1133330ap.png',
                 date_format= datetime.datetime.now()
                )
     return item

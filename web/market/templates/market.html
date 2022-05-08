@@ -13,11 +13,11 @@
   {% if current_user.is_authenticated %}
     <section class="jumbotron text-center" style="background-image:url('/static/img/page_imgs/market_logo3.jpg')">
       <div class="container">
-        <h1 class="display-3 my-5" style="font-family: fantasy; color: #29271e;">Guacatea Market</h1>
+        <h1 class="display-3 my-5" style="font-family: fantasy, Arial, Helvetica, sans-serif; color: #29271e;">Guacatea Market</h1>
       </div>
     </section>
   {% else %}
-    <section class="jumbotron text-center">
+    <section class="jumbotron text-center" style="background-image:url('/static/img/page_imgs/market_logo4.jpg')">
       <div class="container">
         <h1 class="jumbotron-heading">Guacatea Market</h1>
         <p class="lead">
@@ -110,6 +110,7 @@
       <!-- Grid column -->
       <div class="col-md-2 mb-3">
         <h6 class="text-uppercase font-weight-bold">
+          <a href="{{ url_for('terms')}}" class="text-light">Terms &amp; Conditions</a>
         </h6>
       </div>
       <!-- Grid column -->

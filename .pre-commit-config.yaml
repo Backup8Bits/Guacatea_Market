@@ -1,5 +1,5 @@
-# Before "pre-commit install"
-# Just run "pre-commit run --all-files" for execute these hooks
+# First run in the root "pre-commit install"
+# Then run "pre-commit run --all-files" for execute these hooks
 
 repos:
 # pre-commit-hooks
