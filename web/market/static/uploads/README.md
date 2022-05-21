@@ -1,3 +1,3 @@
-# En este folder iran las imagenes que suba el usuario
+# In this folder will go the images that are uploaded to the website.
 
-- Para propositos técnicos se subira a GitHub el folder vacio.
+- For technical purposes an empty folder will be uploaded to GitHub.

@@ -1,4 +1,9 @@
-
+body {
+  background-color: #9a9d90 !important;
+}
+.text-muted {
+  color: #007bff !important;
+}
 .cart-item-thumb {
     display: block;
     width: 10rem
@@ -26,9 +31,6 @@
     font-weight: normal;
 }
 
-.text-muted {
-    color: #888 !important;
-}
 
 .bg-secondary {
     background-color: #f7f7f7 !important;
@@ -41,4 +43,7 @@
 }
 .font-weight-semibold {
     font-weight: 600 !important;
+}
+.card-body {
+  background-color: #9a9d90;
 }

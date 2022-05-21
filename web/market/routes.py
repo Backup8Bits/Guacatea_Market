@@ -249,6 +249,10 @@ def items_page():
 def terms():
     return render_template('terms&conditions.html')
 
+@app.route("/contact")
+def contact():
+    return render_template('contact_us.html')
+
 @app.errorhandler(404)
 def not_found(e):
   return render_template("404.html"), 404

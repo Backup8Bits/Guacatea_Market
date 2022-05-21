@@ -5,8 +5,9 @@ Upload Page
 {% endblock %}
 
 {% block styles %}
-
+<link rel="stylesheet" href="/static/css/upload_page.css">
 {% endblock %}
+
 {% block content %}
 <style>
   input[type=number]::-webkit-inner-spin-button,
@@ -15,16 +16,16 @@ Upload Page
     -moz-appearance: none;
     appearance: none;
     margin: 0;
-}
+  }
 </style>
 
 <div class="container">
 
-  <div class="card bg-light">
+  <div class="card">
     <article class="card-body mx-auto py-0" >
       <h4 class="card-title mt-3 text-center font-weight-bold">Upload Items</h4>
       <p class="text-center mb-0 font-weight-bold mb-3">Welcome back! Sell your items and get money!</p>
-      <img class="rounded mx-auto d-block mb-3" src="/static/img/page_imgs/avocado_uploadpage.png" alt="Animated Avocado">
+      <img class="rounded mx-auto d-block" src="/static/img/page_imgs/avocado_upload.webp" height="200" width="200" alt="Animated Avocado">
 
       <form class="mt-2" method="post" enctype="multipart/form-data">
         {{ upload_form.hidden_tag() }}

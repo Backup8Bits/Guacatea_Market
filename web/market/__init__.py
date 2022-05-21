@@ -15,6 +15,7 @@ load_dotenv()
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
+
 # Configuración de la base de datos
 if os.environ.get('FLASK_DEBUG') == '1':
     app.config['SQLALCHEMY_DATABASE_URI'] = DEV_DB
