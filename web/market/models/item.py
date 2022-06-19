@@ -23,7 +23,7 @@ class Item(db.Model):
     name = db.Column(db.String(30), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1024), nullable=False)
-    image = db.Column(db.String(100), nullable=True)
+    image = db.Column(db.String, nullable=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     owner = db.Column(db.Integer, db.ForeignKey('user.id'), default=None)
     creator = db.Column(db.Integer, db.ForeignKey('user.id'), default=None)
@@ -39,10 +39,10 @@ class Item(db.Model):
     def date_format(self, date_without_format):
         self.date_posted = date_without_format.strftime('%m/%d/%Y - %H:%M:%S')
 
-    @property
-    def path_format(self):
-        return self.path_format
+    # @property
+    # def path_format(self):
+    #     return self.path_format
 
-    @path_format.setter
-    def path_format(self, path_absolute):
-        self.image = '/' + '/'.join(path_absolute.split('/')[3:])
+    # @path_format.setter
+    # def path_format(self, path_absolute):
+    #     self.image = '/' + '/'.join(path_absolute.split('/')[3:])

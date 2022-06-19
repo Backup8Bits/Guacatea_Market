@@ -1,5 +1,5 @@
 body {
-  background-color: #9a9d90 !important;
+  background-color: #9cafc2 !important;
 }
 .text-muted {
   color: #007bff !important;
@@ -45,5 +45,9 @@ body {
     font-weight: 600 !important;
 }
 .card-body {
-  background-color: #9a9d90;
+  background-color: #9cafc2;
+}
+
+.card {
+  border: none !important;
 }

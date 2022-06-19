@@ -47,13 +47,11 @@ def test_new_item(new_item):
     """
     GIVEN a Item model \n
     WHEN a new Item is created \n
-    THEN check the name, price, description, image, date_posted fields are defined correctly
+    THEN check the name, price, description, date_posted fields are defined correctly
     """
 
     assert new_item.name == 'NewItem'
     assert new_item.price == 100
     assert new_item.description == 'Item Description'
-    assert new_item.image != '/opt/app/market/static/uploads/e57399e1133330ap.png'
-    assert new_item.image == '/static/uploads/e57399e1133330ap.png'
     assert new_item.__repr__() == 'Item: NewItem'
     assert new_item.date_posted != datetime.datetime.now()

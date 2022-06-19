@@ -12,6 +12,8 @@ from market.models.item import Item
 from market.models.user import User
 from PIL import Image
 
+from .firebase_connection import upload_file
+
 
 @app.route('/')
 @app.route('/home')
@@ -217,7 +219,7 @@ def upload_page():
             price=upload_form.price.data,
             description=upload_form.description.data,
             creator=current_user.id,
-            path_format=save_picture(form_picture),
+            image=upload_file(form_picture),
             )
         db.session.add(item_to_create)
         db.session.commit()
@@ -256,19 +258,3 @@ def contact():
 @app.errorhandler(404)
 def not_found(e):
   return render_template("404.html"), 404
-
-
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/uploads', picture_fn)
-
-    output_size = (800, 800)
-    im = Image.open(form_picture)
-    if im.mode in ("RGBA", "P"):
-        im = im.convert("RGB")
-    im.thumbnail(output_size)
-    im.save(picture_path)
-
-    return picture_path

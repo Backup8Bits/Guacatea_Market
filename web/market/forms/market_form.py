@@ -14,7 +14,6 @@ class SellItemForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     price = IntegerField('Price', validators=[DataRequired()])
     image = FileField('Choose file', validators=[
-
         FileAllowed(['png', 'jpg','jpeg'], "Wrong format. Try again!"),
         FileRequired()
         ])

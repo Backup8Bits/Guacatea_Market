@@ -31,7 +31,7 @@ services:
             - adminer
         environment:
             - FLASK_ENV=development #Set this with "production" for deploy
-            - FLASK_DEBUG=1 #Set this to 0 for production
+            - FLASK_DEBUG=0 #Set this to 0 for production
             - PYTHONUNBUFFERED=1
             - FLASK_APP=run.py
         networks:
