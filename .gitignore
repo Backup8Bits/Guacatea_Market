@@ -62,6 +62,7 @@ cover/
 # Django stuff:
 *.log
 local_settings.py
+market.db
 db.sqlite3
 db.sqlite3-journal
 
@@ -70,9 +71,15 @@ instance/
 .webassets-cache
 uploads*
 
+*.env
+.env*
+
 # Scrapy stuff:
 .scrapy
-
+#Firebase stuff:
+serviceAccountKey.json
+*.json
+.json*
 # Sphinx documentation
 docs/_build/
 
@@ -111,6 +118,7 @@ celerybeat.pid
 
 # Environments
 flaskenv
+.env
 env
 .venv
 env/

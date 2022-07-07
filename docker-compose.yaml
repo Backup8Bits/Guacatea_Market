@@ -55,15 +55,6 @@ services:
             - 80:80
         networks:
             - flask-network
-    # create_db:
-    #     build: web
-    #     command: flask create_db
-    #     restart: on-failure
-    #     networks:
-    #         - flask-network
-    #     depends_on:
-    #         - db
-    #         - adminer
 volumes:
     postgres-db-volume:
 
