@@ -1,13 +1,10 @@
 <h1 align="center">Bienvenidos a Guacatea Market 🛒</h1>
 
 ## 🥑 ¿Qué es Guacatea_Market?
-> ![Verde Oscuro y Hojas Medioambiente Logo](https://user-images.githubusercontent.com/90936639/178795023-0b22c42d-7a12-463f-992d-6eeb614524e6.png)
+> ![localhost_market(Nest Hub Max)](https://user-images.githubusercontent.com/90936639/180116263-f5d650ac-8853-405b-99e6-572d1f1f0863.png)
 
-<p>
-  Es un E-Comerce robusto construído con Flask, Postgresql y SQLAlchemy.<br>
-  Donde podra comprar y vender arte digital de artistas independientes.
-
-</p>
+ > Es un E-Comerce robusto construído con Flask, Postgresql y SQLAlchemy.<br>
+ > Donde podra comprar y vender arte digital de artistas independientes.
 
 ## 📂 Link para Clonar Repositorio
 ```
