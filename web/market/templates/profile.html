@@ -18,7 +18,7 @@ Profile Page
                 class="rounded-circle img-fluid" style="width: 100px;"/>
             </div>
             <h4 class="mb-2">{{user.username}}</h4>
-            <p class="text-muted mb-4">@Profession <span class="mx-2">|</span> <a href="#!">sitioweb.com</a></p>
+            <p class="text-muted mb-4">@Shopper <span class="mx-2">|</span> <a href="#!">sitioweb.com</a></p>
             <div class="mb-4 pb-2">
               <button type="button" class="btn btn-outline-primary btn-floating">
                 <i class="fab fa-facebook-f fa-lg"></i>
@@ -46,15 +46,18 @@ Profile Page
 
             <div class="d-flex justify-content-between text-center mt-5 mb-2">
               <div>
-                <p class="mb-2 h5">8471</p>
+                {% if current_user.id == user.id %}
+                <p class="mb-2 h5">{{user.cash}}</p>
                 <p class="text-muted mb-0">Wallets Balance</p>
+                {% else %}
+                {% endif %}
               </div>
               <div class="px-3">
-                <p class="mb-2 h5">8512</p>
-                <p class="text-muted mb-0">Income amounts</p>
+                <p class="mb-2 h5">{{user.artworks|length}}</p>
+                <p class="text-muted mb-0">Published artworks</p>
               </div>
               <div>
-                <p class="mb-2 h5">4751</p>
+                <p class="mb-2 h5">{{user.items|length}}</p>
                 <p class="text-muted mb-0">Total Transactions</p>
               </div>
             </div>

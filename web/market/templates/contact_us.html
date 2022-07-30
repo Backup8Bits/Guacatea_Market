@@ -9,64 +9,71 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="section-title">
-    <h2>Contact</h2>
-    <p>
-      Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi
-      quidem hic quas.
-    </p>
-  </div>
-  <div class="row mt-5">
-    <div class="col-lg-6">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="info-box">
-                    <i class="bx bx-map"></i>
-                    <h3>Our Address</h3>
-                    <p>A108 Adam Street, New York, NY 535022</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="info-box mt-4">
-                    <i class="bx bx-envelope"></i>
-                    <h3>Email Us</h3>
-                    <p>
-                        info@example.com<br />
-                        contact@example.com
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="info-box mt-4">
-                    <i class="bx bx-phone-call"></i>
-                    <h3>Call Us</h3>
-                    <p>
-                        +1 5589 55488 55<br />
-                        +1 6678 254445 41
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-            <div class="row">
-                <div class="col form-group"><input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="" /></div>
-                <div class="col form-group mt-3"><input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="" /></div>
-            </div>
-            <div class="form-group mt-3"><input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required="" /></div>
-            <div class="form-group mt-3"><textarea class="form-control" name="message" rows="5" placeholder="Message" required=""></textarea></div>
-            <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
-        </form>
-    </div>
-  </div>
+<style>
+  .card {
+    background-color: #9cafc2 !important;
+  }
+  body {
+    background-color: #495057;
+  }
+  .bg-image {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/g-market-5f76f.appspot.com/o/9481f711f66f9124374f42d8.png?alt=media&token=a8d5415b-a9d6-4426-a08f-60fbc2fb7d19');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  };
+</style>
+<div class="container-fluid px-5 my-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card border-0 rounded-3 shadow-lg overflow-hidden">
+        <div class="card-body p-0">
+          <div class="row g-0">
+            <div class="col-sm-6 d-none d-sm-block bg-image"></div>
+            <div class="col-sm-6 p-4">
+              <div class="text-center">
+                <div class="h3 fw-light">Contact Form</div>
+                <p class="mb-4 text-muted">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</p>
+              </div>
 
+              <form id="contactForm">
+
+                <!-- Name Input -->
+                <div class="form-floating mb-3">
+                  <label for="name">Name</label>
+                  <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                  <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                </div>
+
+                <!-- Email Input -->
+                <div class="form-floating mb-3">
+                  <label for="emailAddress">Email Address</label>
+                  <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
+                  <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
+                  <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="form-floating mb-3">
+                  <label for="message">Message</label>
+                  <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
+                  <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
+                </div>
+
+                <!-- Submit button -->
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button>
+                </div>
+              </form>
+              <!-- End of contact form -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

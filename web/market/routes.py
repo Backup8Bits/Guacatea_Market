@@ -1,6 +1,3 @@
-import os
-import secrets
-
 from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from market import app, db
@@ -10,17 +7,97 @@ from market.forms.market_form import (BuyAllItemsForm, DeleteItemForm,
                                       PurchaseItemForm, SellItemForm)
 from market.models.item import Item
 from market.models.user import User
-from PIL import Image
 
 from .firebase_connection import upload_file
 
 
+# /****************/
+# /* Index page. */
+# /****************/
 @app.route('/')
 @app.route('/home')
 def home_page():
     return render_template('home.html')
 
 
+# /****************/
+# /* Auth routes. */
+# /****************/
+@app.route('/register', methods=["GET", "POST"])
+def register_page():
+    form = RegisterForm()
+    if not current_user.is_authenticated:
+        if form.validate_on_submit():
+            user_to_create = User(username=form.username.data,
+                                email=form.email.data,
+                                password=form.password_1.data
+                                )
+            db.session.add(user_to_create)
+            db.session.commit()
+            login_user(user_to_create)
+            flash(f'Account created successfully! You are now logged in as {user_to_create.username}', category='success')
+            # Cuando se crea un Usuario se crea un Carrito que tiene el id del Usuario esto lo hace único
+            session[user_to_create.username] = { 'cart': [] }
+            return redirect(url_for('market_page'))
+
+        if form.errors != {}: #If there are not errors from the validations
+            for err_msg in form.errors.values():
+                flash(f'There was an error with creating a user: {err_msg}', category='danger')
+
+        return render_template('register.html', form=form)
+
+    flash(f"You are already registered", category='info')
+    return redirect(url_for('market_page'))
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login_page():
+    form = LoginForm()
+    if not current_user.is_authenticated:
+        if form.validate_on_submit():
+            user_to_verify = User.query.filter_by(username=form.username.data).first()
+            # 1ro Verifica que el usuario exista
+            # 2do Verifica que la contraseña sea correcta
+            if user_to_verify and user_to_verify.check_password(
+                                                    attempted_password=form.password.data):
+                login_user(user_to_verify)
+                flash(f'You are logging now! Welcome {user_to_verify.username}', category='success')
+                session[form.username.data] = { 'cart': [] } if session.get(form.username.data) is None else session.get(form.username.data)
+
+                return redirect(url_for('market_page'))
+            else:
+                flash('Username and password are not match! Please try again', category='danger')
+
+        if form.errors != {}: #If there are not errors from the validations
+            for err_msg in form.errors.values():
+                flash(f'There was an error with creating a user: {err_msg}', category='danger')
+
+        return render_template('login.html', form=form)
+
+    flash(f"You are already logged in!", category='info')
+    return redirect(url_for('market_page'))
+
+
+@app.route("/logout")
+@login_required
+def logout_page():
+    my_user = current_user.username
+    session.pop(my_user, None)
+    logout_user()
+    flash(f"You've been logged out now ", category='info')
+    return redirect(url_for('home_page'))
+
+
+@app.route("/profile/<int:user_id>")
+@login_required
+def profile_page(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return render_template('profile.html', user=user)
+
+
+# /***********************************/
+# /* Market routes(items). */
+# /***********************************/
 @app.route('/market', methods=["GET", "POST"])
 def market_page():
     purchase_form = PurchaseItemForm()
@@ -77,70 +154,6 @@ def market_page():
         cart_items=[item for item in cart_items],
         user_id=None if current_user.is_anonymous else current_user.id,
         delete_form=delete_form)
-
-
-@app.route('/register', methods=["GET", "POST"])
-def register_page():
-    form = RegisterForm()
-    if not current_user.is_authenticated:
-        if form.validate_on_submit():
-            user_to_create = User(username=form.username.data,
-                                email=form.email.data,
-                                password=form.password_1.data
-                                )
-            db.session.add(user_to_create)
-            db.session.commit()
-            login_user(user_to_create)
-            flash(f'Account created successfully! You are now logged in as {user_to_create.username}', category='success')
-            # Cuando se crea un Usuario se crea un Carrito que tiene el id del Usuario esto lo hace único
-            session[user_to_create.username] = { 'cart': [] }
-            return redirect(url_for('market_page'))
-
-        if form.errors != {}: #If there are not errors from the validations
-            for err_msg in form.errors.values():
-                flash(f'There was an error with creating a user: {err_msg}', category='danger')
-
-        return render_template('register.html', form=form)
-
-    flash(f"You are already registered", category='info')
-    return redirect(url_for('market_page'))
-
-@app.route('/login', methods=["GET", "POST"])
-def login_page():
-    form = LoginForm()
-    if not current_user.is_authenticated:
-        if form.validate_on_submit():
-            user_to_verify = User.query.filter_by(username=form.username.data).first()
-            # 1ro Verifica que el usuario exista
-            # 2do Verifica que la contraseña sea correcta
-            if user_to_verify and user_to_verify.check_password(
-                                                    attempted_password=form.password.data):
-                login_user(user_to_verify)
-                flash(f'You are logging now! Welcome {user_to_verify.username}', category='success')
-                session[form.username.data] = { 'cart': [] } if session.get(form.username.data) is None else session.get(form.username.data)
-
-                return redirect(url_for('market_page'))
-            else:
-                flash('Username and password are not match! Please try again', category='danger')
-
-        if form.errors != {}: #If there are not errors from the validations
-            for err_msg in form.errors.values():
-                flash(f'There was an error with creating a user: {err_msg}', category='danger')
-
-        return render_template('login.html', form=form)
-
-    flash(f"You are already logged in!", category='info')
-    return redirect(url_for('market_page'))
-
-
-@app.route("/logout")
-@login_required
-def logout_page():
-    my_user = current_user.username
-    session.pop(my_user, None)
-    logout_user()
-    flash(f"You've been logged out now ", category='info')
-    return redirect(url_for('home_page'))
 
 
 @app.route("/mycart", methods=["GET", "POST"])
@@ -209,6 +222,17 @@ def cart_page():
                             purchase_form=purchase_form, buy_items_form=buy_items_form,
                             get_total_price=get_total_price, cart_items=[item for item in cart_items])
 
+
+@app.route("/myitems")
+@login_required
+def items_page():
+    my_items = Item.query.filter_by(owner=current_user.id)
+    return render_template('items_page.html', my_items=my_items)
+
+
+# /****************/
+# /* Other routes. */
+# /****************/
 @app.route("/upload", methods=['GET', 'POST'])
 @login_required
 def upload_page():
@@ -233,27 +257,15 @@ def upload_page():
     return render_template('upload_page.html', upload_form=upload_form)
 
 
-@app.route("/profile/<int:user_id>")
-@login_required
-def profile_page(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    return render_template('profile.html', user=user)
-
-
-@app.route("/myitems")
-@login_required
-def items_page():
-    my_items = Item.query.filter_by(owner=current_user.id)
-    return render_template('items_page.html', my_items=my_items)
-
-
 @app.route("/terms")
 def terms():
     return render_template('terms&conditions.html')
 
+
 @app.route("/contact")
 def contact():
     return render_template('contact_us.html')
+
 
 @app.errorhandler(404)
 def not_found(e):
